@@ -16,6 +16,7 @@
     <modules>
         <module>spellbound-ngram</module>
         <module>spellbound-norvig</module>
+        <module>spellbound-snippets</module>
     </modules>
 
     <properties>

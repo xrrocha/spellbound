@@ -15,7 +15,7 @@
     <artifactId>spellbound-ngram-xtend</artifactId>
     <packaging>jar</packaging>
 
-    <name>Spelling Suggestion in Xtend</name>
+    <name>NGram Spelling Suggestion in Xtend</name>
     <url>https://xrrocha.net/post/spellbound-ngram-xtend</url>
 
     <properties>
