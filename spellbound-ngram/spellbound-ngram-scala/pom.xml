@@ -19,9 +19,8 @@
     <url>https://xrrocha.net/post/spellbound-ngram-scala</url>
 
     <properties>
-        <!-- Spark forces Scala 2.11 :-( -->
-        <scala-major.version>2.11</scala-major.version>
-        <scala-minor.version>8</scala-minor.version>
+        <scala-major.version>2.12</scala-major.version>
+        <scala-minor.version>4</scala-minor.version>
         <scala.version>${scala-major.version}.${scala-minor.version}</scala.version>
         <scala-plugin.version>3.3.1</scala-plugin.version>
         <scalatest.version>3.0.4</scalatest.version>

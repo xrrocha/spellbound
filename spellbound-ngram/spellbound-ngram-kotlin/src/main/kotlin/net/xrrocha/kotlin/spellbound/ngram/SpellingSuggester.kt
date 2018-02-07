@@ -21,7 +21,7 @@ open class DefaultSpellingSuggester(private val stringMetric: StringMetric,
 
     val (dictionary, ngram2words) = loadedDictionary
 
-    val normalizedWord = normalize(word)
+    val normalizedWord = word.normalize()
 
     return if (dictionary.contains(normalizedWord)) {
       // Word occurs in dictionary; suggestions not applicable
@@ -38,19 +38,19 @@ open class DefaultSpellingSuggester(private val stringMetric: StringMetric,
           .distinct()
           // 5) Compute distance index for each candidate word and emit as a pair: List<Pair<Word, Similarity>>
           .map { suggestion ->
-            val distance = stringMetric.stringSimilarity(normalizedWord, suggestion)
+            val distance = stringMetric.stringDistance(normalizedWord, suggestion)
             Suggestion(suggestion, distance)
           }
           // 6) Omit words whose distance with the unknown word falls below maxDistance: List<Pair<Word, Similarity>>
-          .filter { (_, distance) -> distance >= maxDistance }
+          .filter { (_, distance) -> distance < maxDistance }
           // 7) Sort words descendingly by distance so most similar words are shown first: List<Pair<Word, Similarity>>
-          .sorted()
+          .sortedDescending()
           // 8) Remove distance scores producing only the ordered (but possibly empty) suggestion list: Seq[Word]
           .map { (suggestion, _) -> suggestion }
     }
   }
 
-  fun normalize(word: Word) = word.trim().toLowerCase()
+  fun String.normalize() = this.trim().toLowerCase()
 
   fun loadFromFilesystem(): Pair<Set<Word>, NGramMap> {
 
@@ -59,10 +59,12 @@ open class DefaultSpellingSuggester(private val stringMetric: StringMetric,
     // Create normalized set of unique dictionary words
     val dictionary: Set<Word> =
         dictionaryFile
-            // Each line contains a separate word
+            // Each line contains a word and its rank
             .readLines()
             // Normalize each word
-            .map { normalize(it) }
+            .map {
+              it.split("\\t".toRegex())[0].normalize()
+            }
             // Remove dups after normalization
             .toSet()
 

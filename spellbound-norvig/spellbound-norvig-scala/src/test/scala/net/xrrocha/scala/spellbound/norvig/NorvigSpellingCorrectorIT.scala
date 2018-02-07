@@ -21,8 +21,7 @@ class NorvigSpellingCorrectorIT extends FunSuite with LazyLogging {
 
     assert(corrector.getCorrectionsFor("korrectud").contains(Seq("corrected")))
 
-    assert(corrector.getCorrectionsFor("ricsha")
-      .contains(Seq("rich", "trisha", "rocha", "aisha", "rishi", "tisha")))
+    assert(corrector.getCorrectionsFor("ricsha").contains(Seq("ricksha")))
 
     assert(corrector.getCorrectionsFor("sleping")
       .contains(Seq("sleeping", "sloping", "slewing", "seeping")))
