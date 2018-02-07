@@ -1,6 +1,6 @@
 ## Spellbound: Spelling Suggestion Implemented in Multiple JVM languages
 
-<div" style="float: left; margin-right: 16px;">
+<div style="float: left; margin-right: 16px;">
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion.png>
 </div>
 This tutorial project implements a simple (but functional) spelling suggestion service.
