@@ -34,6 +34,7 @@ written for each approach/language pair contrasting the Java solution with that 
 corresponding JVM language.
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/peter-norvig.png" width="25%" height="25%" align="left">
+
 The first approach (which we refer to as [Norvig](https://en.wikipedia.org/wiki/Peter_Norvig)'s
 approach) identifies top four typo-inducing mistakes (deletes, transposes, replaces and
 inserts). The intuition here is that such edit operations are _commutative_ so that, when applied
@@ -43,6 +44,7 @@ performant but occasionally misses sensible corrections.
 <br style="clear: both">
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/ngram2word.png" width="25%" height="25%" align="left">
+
 The second approach (which we refer to as as the [ngram-based](https://en.wikipedia.org/wiki/N-gram)
 approach) is based on the notion that a dictionary word and most of its typos share a number of
 common ngrams. When an unknown word is found, a set of dictionary words is retrieved that share one
