@@ -7,17 +7,14 @@ Accompanying blog entries start at
 [Spellbound's xrrocha.net blog](https://xrrocha.net/post/spelling-jvm-1.0/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
-implementations can prove quite nuanced). This simplicity allows Java developers to focus on the
-alternative JVM languages as such, unencumbered by needless complexity.
+implementations can prove quite nuanced). By embracing ease of implementation over optimal 
+performance we help Java developers focus on the alternative JVM languages as such,
+unencumbered by needless complexity.
 
-For the sake of brevity we follow a happy path approach to design where we focus on the core
-functionality omitting otherwise useful but non-essential behavior. We also accept less than ideal
-performance in the name of implementation simplicity.
-
-In this scenario, spelling suggestion makes an excellent vehicle to illustrate and contrast various
-"better Java" JVM languages. Features discussed include aspects such as functional programming,
-type inference, extension methods, compile-time code generation and other niceties well beyond
-vanilla Java usage.
+Within these relaxed constraints, spelling suggestion provides an excellent subject to illustrate 
+and contrast various "better Java" JVM languages. Features discussed include  functional 
+programming, type inference, extension methods, compile-time code generation and other niceties 
+well beyond vanilla Java usage.
 
 Examples and new concepts are first introduced first in Java 9 so they're immediately understandable
 to the experienced Java programmer. Crucially, all Java examples are accompanied by equivalent but
