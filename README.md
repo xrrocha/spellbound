@@ -42,7 +42,7 @@ to a typo, they can reconstitute one or more valid dictionary words. This approa
 in [Norvig's Python script](http://norvig.com/spell-correct.html). The algorithm is simple and
 performant but occasionally misses sensible corrections.
 
-<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/ngram2word.jpg" style="float: left; margin-right: 16px;" width="25%" height="25%">
+<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/ngram2word.png" style="float: left; margin-right: 16px;" width="25%" height="25%">
 The second approach (which we refer to as as the [ngram-based](https://en.wikipedia.org/wiki/N-gram)
 approach) is based on the notion that a dictionary word and most of its typos share a number of
 common ngrams. When an unknown word is found, a set of dictionary words is retrieved that share one
