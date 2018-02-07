@@ -13,27 +13,27 @@ object DamerauStringMetric extends StringMetric {
   lazy val maxDistance = .275
   lazy val damerau = new Damerau
 
-  def stringDistance(s1: String, s2: String) = {
+  def stringDistance(s1: String, s2: String): Distance = {
     val maxLength = math.max(s1.length, s2.length)
     1.0 - (maxLength - damerau.distance(s1, s2)) / maxLength
   }
 }
 
 trait LuceneStringMetric extends StringMetric {
-  def stringDistance: org.apache.lucene.search.spell.StringDistance
+  def stringDistanceMetric: org.apache.lucene.search.spell.StringDistance
 
   def stringDistance(s1: String, s2: String): Double =
-    1.0 - stringDistance.getDistance(s1, s2)
+    1.0 - stringDistanceMetric.getDistance(s1, s2)
 }
 
 object LevenshteinStringMetric extends LuceneStringMetric {
   lazy val maxDistance = .75
-  lazy val stringDistance = new LevensteinDistance
+  lazy val stringDistanceMetric = new LevensteinDistance
 }
 
 object JaroWinklerStringMetric extends LuceneStringMetric {
   lazy val maxDistance = .85
-  lazy val stringDistance = new JaroWinklerDistance
+  lazy val stringDistanceMetric = new JaroWinklerDistance
 }
 
 trait StringMetricConfig extends ConfigSettings {
