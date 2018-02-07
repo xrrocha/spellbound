@@ -42,6 +42,7 @@ to a typo, they can reconstitute one or more valid dictionary words. This approa
 in [Norvig's Python script](http://norvig.com/spell-correct.html). The algorithm is simple and
 performant but occasionally misses sensible corrections.
 <br style="clear: both">
+<br style="clear: both">
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/ngram2word.png" width="25%" height="25%" align="left">
 
