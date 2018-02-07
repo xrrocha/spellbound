@@ -25,7 +25,7 @@ _idiomatic_ implementations in today's most relevant alternative JVM languages:
 [Kotlin](https://kotlinlang.org/),
 [Scala](http://scala-lang.org/) and
 [Xtend](http://www.eclipse.org/xtend/).
-
+<br style="clear: both">
 
 
 
@@ -43,6 +43,7 @@ inserts). The intuition here is that such edit operations are _commutative_ so t
 to a typo, they can reconstitute one or more valid dictionary words. This approach is illustrated
 in [Norvig's Python script](http://norvig.com/spell-correct.html). The algorithm is simple and
 performant but occasionally misses sensible corrections.
+<br style="clear: both">
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/ngram2word.png" style="float: left; margin-right: 16px;" width="25%" height="25%">
 The second approach (which we refer to as as the [ngram-based](https://en.wikipedia.org/wiki/N-gram)
@@ -56,3 +57,4 @@ metric). If the comparison is below a metric-specific maximum threshold then the
 word is deemed a correction suggestion. In the worst case, this approach may require thousands of 
 such comparisons and yet retrieve only a few candidate words. Despite this, its performance is 
 acceptable and (unlike Norvig's approach) produces an almost exhaustive list of suggestions.
+<br style="clear: both">
