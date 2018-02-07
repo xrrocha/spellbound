@@ -34,7 +34,7 @@ three above-mentioned languages (Java, Kotlin, Scala and Xtend). A separate tuto
 written for each approach/language pair contrasting the Java solution with that of each
 corresponding JVM language.
 
-<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/peter-norvig.jpg" style="float: left; margin-right: 16px;" width="25%" height="25%">
+<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/peter-norvig.png" style="float: left; margin-right: 16px;" width="25%" height="25%">
 The first approach (which we refer to as [Norvig](https://en.wikipedia.org/wiki/Peter_Norvig)'s
 approach) identifies top four typo-inducing mistakes (deletes, transposes, replaces and
 inserts). The intuition here is that such edit operations are _commutative_ so that, when applied
