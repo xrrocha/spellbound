@@ -3,7 +3,7 @@
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion.png" align="left">
 
 This tutorial project implements a simple (but functional) spelling suggestion service.
-Accompanying blog entries start at
+Accompanying blog entries starting at
 [Spellbound's xrrocha.net blog](https://xrrocha.net/post/spelling-jvm-1.0/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
