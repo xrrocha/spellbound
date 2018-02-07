@@ -1,8 +1,10 @@
 ## Spellbound: Spelling Suggestion Implemented in Multiple JVM languages
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion.png" style="float: left; margin-right: 16px;" align="left">
+
 This tutorial project implements a simple (but functional) spelling suggestion service.
-Accompanying blog entries start at [Spellbound's xrrocha.net blog](https://xrrocha.net/post/spelling-jvm-1.0/).
+Accompanying blog entries start at
+[Spellbound's xrrocha.net blog](https://xrrocha.net/post/spelling-jvm-1.0/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
 implementations can prove quite nuanced). This simplicity allows Java developers to focus on the
