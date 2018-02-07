@@ -38,8 +38,9 @@ corresponding JVM language.
 The first approach (which we refer to as [Norvig](https://en.wikipedia.org/wiki/Peter_Norvig)'s
 approach) identifies top four typo-inducing mistakes (deletes, transposes, replaces and
 inserts). The intuition here is that such edit operations are _commutative_ so that, when applied
-to a typo, they can reconstitute one or more valid dictionary words. This approach is illustrated
-in [Norvig's Python script](http://norvig.com/spell-correct.html). The algorithm is simple and
+to a typo, they can reconstitute one or more valid dictionary words (for instance, a _delete_ can
+be compensated by an _insert_ and viceversa). This approach is illustrated in 
+[Norvig's Python script](http://norvig.com/spell-correct.html). The algorithm is simple and
 performant but occasionally misses sensible corrections.
 <br style="clear: both">
 <br style="clear: both">
