@@ -170,7 +170,7 @@
                 <configuration>
                     <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
                     <includes>
-                        <include>com/threeci/**/*</include>
+                        <include>net/xrrocha/**/*</include>
                     </includes>
                 </configuration>
                 <executions>
@@ -184,23 +184,6 @@
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${shade.version}</version>
-                <configuration>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
                         </goals>
                     </execution>
                 </executions>
