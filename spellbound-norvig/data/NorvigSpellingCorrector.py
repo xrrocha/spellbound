@@ -5,7 +5,7 @@ from collections import Counter
 def words(text): return re.findall(r'\w+', text.lower())
 
 
-WORDS = Counter(words(open('dictionary.tsv').read()))
+WORDS = Counter(words(open('normalized-spanish-names.tsv').read()))
 
 
 def P(word, N=sum(WORDS.values())):
@@ -43,8 +43,3 @@ def edits2(word):
     "All edits that are two edits away from `word`."
     return (e2 for e1 in edits1(word) for e2 in edits1(e1))
 
-
-# The function correction(word) returns a likely spelling correction:
-
-for words in map(candidates, ["speling", "korrectud", "ricsha", "sleping", "tougt"]):
-    print(words)
