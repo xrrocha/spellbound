@@ -19,6 +19,9 @@
     <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 
     <properties>
+
+        <java.version>1.8</java.version>
+
         <xtend.version>2.13.0</xtend.version>
 
         <xtend-contrib.version>1.1.0</xtend-contrib.version>
