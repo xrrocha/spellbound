@@ -9,7 +9,7 @@
         <groupId>net.xrrocha</groupId>
         <artifactId>spellbound-java</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../java-pom.xml</relativePath>
     </parent>
 
     <artifactId>spellbound-snippets-java</artifactId>
