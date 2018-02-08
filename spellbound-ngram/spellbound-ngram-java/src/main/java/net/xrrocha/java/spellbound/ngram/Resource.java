@@ -5,6 +5,8 @@ import java.io.OutputStream;
 
 public interface Resource {
   InputStream getInputStream();
+
   OutputStream getOutputStream();
+
   long getLastModified();
 }
