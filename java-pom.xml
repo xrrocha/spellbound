@@ -17,33 +17,4 @@
 
     <name>Spelling Suggestion in Java</name>
     <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
-
-    <properties>
-        <java.version>9</java.version>
-
-        <guava.version>24.0-jre</guava.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
-                <configuration>
-                    <release>${java.version}</release>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
