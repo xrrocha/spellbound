@@ -1,6 +1,5 @@
 package net.xrrocha.java.spellbound.norvig;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,7 +12,7 @@ public class SpellingCorrector {
 
   private final Map<String, Integer> dictionary;
 
-  public SpellingCorrector(@Nonnull Map<String, Integer> dictionary) {
+  public SpellingCorrector(Map<String, Integer> dictionary) {
     checkNotNull(dictionary);
     checkArgument(!dictionary.isEmpty());
     this.dictionary = dictionary;
