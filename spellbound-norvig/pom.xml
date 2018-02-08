@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <name>Norvig Spelling Suggestion for the JVM</name>
-    <url>https://xrrocha.net/post/spellbound-norvig</url>
+    <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 
     <modules>
         <module>spellbound-norvig-java</module>

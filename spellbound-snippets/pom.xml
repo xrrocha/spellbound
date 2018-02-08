@@ -18,7 +18,7 @@
     <packaging>pom</packaging>
 
     <name>Spelling Suggestion Snippets</name>
-    <url>https://xrrocha.net/post/spellbound-jvm</url>
+    <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 
     <modules>
         <module>spellbound-snippets-java</module>

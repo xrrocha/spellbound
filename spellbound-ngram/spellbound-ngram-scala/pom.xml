@@ -1,71 +1,20 @@
-<?xml version="1.0"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>net.xrrocha</groupId>
-        <artifactId>spellbound-ngram</artifactId>
+        <artifactId>spellbound-scala</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../scala-pom.xml</relativePath>
     </parent>
 
     <artifactId>spellbound-ngram-scala</artifactId>
     <packaging>jar</packaging>
 
     <name>NGram Spelling Suggestion in Scala</name>
-    <url>https://xrrocha.net/post/spellbound-ngram-scala</url>
-
-    <properties>
-        <scala-major.version>2.12</scala-major.version>
-        <scala-minor.version>4</scala-minor.version>
-        <scala.version>${scala-major.version}.${scala-minor.version}</scala.version>
-        <scala-plugin.version>3.3.1</scala-plugin.version>
-        <scalatest.version>3.0.4</scalatest.version>
-        <scala-logging.version>3.7.2</scala-logging.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.typesafe.scala-logging</groupId>
-            <artifactId>scala-logging_${scala-major.version}</artifactId>
-            <version>${scala-logging.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scala-major.version}</artifactId>
-            <version>${scalatest.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>${scala-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 </project>
