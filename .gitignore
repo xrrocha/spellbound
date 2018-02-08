@@ -13,3 +13,4 @@ dependency-reduced-pom.xml
 project/project
 stage
 target
+toolchains.xml
