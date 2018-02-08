@@ -15,6 +15,6 @@
     <artifactId>spellbound-snippets-kotlin</artifactId>
     <packaging>jar</packaging>
 
-    <name>Snippets Spelling Suggestion in Java</name>
+    <name>Snippets Spelling Suggestion in Kotlin</name>
     <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 </project>

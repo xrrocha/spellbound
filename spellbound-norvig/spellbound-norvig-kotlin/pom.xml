@@ -15,6 +15,6 @@
     <artifactId>spellbound-norvig-kotlin</artifactId>
     <packaging>jar</packaging>
 
-    <name>Norvig Spelling Suggestion in Java</name>
+    <name>Norvig Spelling Suggestion in Kotlin</name>
     <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 </project>

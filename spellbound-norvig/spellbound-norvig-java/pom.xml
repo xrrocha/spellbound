@@ -9,12 +9,12 @@
         <groupId>net.xrrocha</groupId>
         <artifactId>spellbound-java</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../java-pom.xml</relativePath>
     </parent>
 
     <artifactId>spellbound-norvig-java</artifactId>
     <packaging>jar</packaging>
 
-    <name>Norvig Spelling Suggestion in Java</name>
+    <name>Norvig Spelling Suggestion Java</name>
     <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
 </project>
