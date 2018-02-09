@@ -30,8 +30,7 @@ _idiomatic_) implementations in today's most relevant alternative JVM languages:
 
 This projects illustrates two simple approaches to spelling suggestion, each implemented in the
 three above-mentioned languages (Java, Kotlin, Scala and Xtend). A separate tutorial document is
-written for each approach/language pair contrasting the Java solution with that of each
-corresponding JVM language.
+written for each approach/language pair contrasting the Java solution with that of each JVM language.
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/peter-norvig.png" width="25%" height="25%" align="left">
 
@@ -56,8 +55,10 @@ or more ngrams with the typo. Words sharing ngrams with the typo are then compar
 of some
 [string distance metric](https://en.wikipedia.org/wiki/String_metric)
 (often the [Damerau–Levenshtein](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance)
-metric). If the comparison is below a metric-specific maximum threshold then the matching dictionary
-word is deemed a correction suggestion. In the worst case, this approach may require thousands of 
-such comparisons and yet retrieve only a few candidate words. Despite this, its performance is 
-acceptable and (unlike Norvig's approach) produces an almost exhaustive list of suggestions.
+metric). If a comparison falls below a metric-specific maximum threshold
+then the matching dictionary word is deemed a correction suggestion. In the
+worst case, this approach may require thousands of  such comparisons and yet
+retrieve only a few candidate words. Despite this, its performance is 
+acceptable and (unlike Norvig's approach) it produces an almost exhaustive
+list of suggestions.
 <br style="clear: both">
