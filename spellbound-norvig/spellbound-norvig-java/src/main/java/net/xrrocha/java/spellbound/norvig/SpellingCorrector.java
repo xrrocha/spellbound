@@ -70,7 +70,7 @@ public class SpellingCorrector {
    *
    * @param word The word to be validated against dictionary
    * @return <code>Optional.empty()</code> if the word is present in the dictionary
-   * or an optional <code>List&lt;String&gr;</code> containing correction suggestions.
+   * or an optional <code>List&lt;String&gt;</code> containing correction suggestions.
    * This list will contain no elements if a gibberish word is passed that resembles no
    * dictionary word.
    */
