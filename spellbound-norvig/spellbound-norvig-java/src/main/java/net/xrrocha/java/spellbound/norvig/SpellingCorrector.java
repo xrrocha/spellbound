@@ -49,13 +49,18 @@ public class SpellingCorrector {
     List<String> corrections1 = edits1(normalizedWord);
 
     if (corrections1.isEmpty()) {
+
       List<String> corrections2 = edits2(normalizedWord);
+
       if (corrections2.isEmpty()) {
+
         corrections = Optional.of(emptyList());
       } else {
+
         corrections = Optional.of(corrections2);
       }
     } else {
+
       corrections = Optional.of(corrections1);
     }
 
