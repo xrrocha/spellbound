@@ -1,6 +1,10 @@
 package net.xrrocha.java.spellbound.norvig;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -101,7 +105,10 @@ public class SpellingCorrector {
   static List<String> transposes(List<Split> splits) {
     return splits.stream()
         .filter(split -> split.right.length() > 1)
-        .map(split -> split.left + split.right.substring(1, 2) + split.right.substring(0, 1) + split.right.substring(2))
+        .map(split ->
+            split.left + split.right.substring(1, 2) +
+                split.right.substring(0, 1) +
+                split.right.substring(2))
         .collect(Collectors.toList());
   }
 

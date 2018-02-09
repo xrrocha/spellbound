@@ -42,7 +42,7 @@ public class SpellingCorrectorTest {
   }
 
   @Test
-  public void yieldsNonEmptyCorrectionsOnTypo() {
+  public void yieldsCorrectionsOnTypo() {
     List<String> expectedCorrections = List.of(
         "spelling", "spewing", "spiling"
     );
@@ -52,7 +52,7 @@ public class SpellingCorrectorTest {
   }
 
   @Test
-  public void yieldsEmptyCorrectionsOnGibberish() {
+  public void yieldsNoCorrectionsOnGibberish() {
     Optional<List<String>> corrections = spellingCorrector.getCorrections("xwphjwl");
     assertTrue(corrections.isPresent());
     assertTrue(corrections.get().isEmpty());
