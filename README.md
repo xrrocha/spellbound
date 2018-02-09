@@ -3,22 +3,22 @@
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion.png" align="left">
 
 This tutorial project implements a simple (but functional) spelling suggestion service.
-Accompanying blog entries starting at
+Accompanying blog entries are available at
 [Spellbound's xrrocha.net blog](https://xrrocha.net/post/spelling-jvm-1.0/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
 implementations can prove quite nuanced). By embracing ease of implementation over optimal 
-performance we help Java developers focus on the alternative JVM languages as such,
+performance we help Java developers focus on the alternative JVM language implementations,
 unencumbered by needless complexity.
 
 Within these relaxed constraints, spelling suggestion provides an excellent subject to illustrate 
-and contrast various "better Java" JVM languages. Features discussed include  functional 
+and contrast the various "better Java" JVM languages. Features discussed include  functional 
 programming, type inference, extension methods, compile-time code generation and other niceties 
 well beyond vanilla Java usage.
 
 Examples and new concepts are first introduced first in Java 9 so they're immediately understandable
-to the experienced Java programmer. Crucially, all Java examples are accompanied by equivalent but
-_idiomatic_ implementations in today's most relevant alternative JVM languages:
+to the experienced Java programmer. Crucially, all Java examples are accompanied by equivalent )but
+_idiomatic_) implementations in today's most relevant alternative JVM languages:
 [Kotlin](https://kotlinlang.org/),
 [Scala](http://scala-lang.org/) and
 [Xtend](http://www.eclipse.org/xtend/).

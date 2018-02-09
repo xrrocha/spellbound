@@ -162,8 +162,7 @@ public class SpellingCorrector {
    *
    * @param editResults The (possibly empty) list of dictionary words reconstituted
    *                    from typo
-   * @return The <code>List&lt;String&gt;</code> resulting from stream
-   * processing
+   * @return The <code>List&lt;String&gt;</code> resulting from stream processing
    */
   List<String> pack(Stream<String> editResults) {
     return editResults
