@@ -43,8 +43,9 @@ be compensated by an _insert_ and viceversa). This approach is illustrated in
 [Norvig's Python script](http://norvig.com/spell-correct.html). The algorithm is simple and
 performant but occasionally misses sensible corrections.
 
-> _Take a look at the [Norvig Spelling Corrector Java implementation](https://github.com/xrrocha/spellbound/blob/master/spellbound-norvig/spellbound-norvig-java/src/main/java/net/xrrocha/java/spellbound/norvig/SpellingCorrector.java)_.
-<br style="clear: both">
+> _You may want to take a look at the [Norvig Spelling Corrector Java implementation](https://github
+.com/xrrocha/spellbound/blob/master/spellbound-norvig/spellbound-norvig-java/src/main/java/net/xrrocha/java/spellbound/norvig/SpellingCorrector.java)_.
+<br>
 <br style="clear: both">
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/ngram2word.png" width="25%" height="25%" align="left">
