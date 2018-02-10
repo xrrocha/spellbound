@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -56,8 +57,8 @@ public class BruteForceSpellChecker {
             })
             // Omit words too far apart from typo
             .filter(entry -> entry.getValue() <= maxDistance)
-            // Order suggested words so closer matches show first
-            .sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue()))
+            // Order suggested words by rank so closer matches show first
+            .sorted(Comparator.comparing(SimpleEntry::getValue))
             .collect(Collectors.toList());
 
     List<String> similarWords =
