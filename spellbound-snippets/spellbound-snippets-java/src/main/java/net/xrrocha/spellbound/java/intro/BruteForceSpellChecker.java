@@ -23,7 +23,7 @@ public class BruteForceSpellChecker {
       loadDictionary("spellbound-ngram/data/dictionary.tsv");
 
   static final double maxDistance = 0.275;
-  static final MetricStringDistance metricStringDistance = new Damerau();
+  static final MetricStringDistance damerau = new Damerau();
 
   public static void main(String[] args) {
 
@@ -72,7 +72,7 @@ public class BruteForceSpellChecker {
 
   static double getDistance(String s1, String s2) {
     int maxLength = Math.max(s1.length(), s2.length());
-    return 1.0 - (maxLength - metricStringDistance.distance(s1, s2)) / maxLength;
+    return 1.0 - (maxLength - damerau.distance(s1, s2)) / maxLength;
   }
 
   static Set<String> loadDictionary(String dictionaryFilename) {
