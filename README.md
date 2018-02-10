@@ -4,7 +4,7 @@
 
 This tutorial project implements a simple (but functional) spelling suggestion service.
 Accompanying blog entries are available at
-[Spellbound's xrrocha.net blog](https://medium.com/@xrrocha/spelling-suggester-implemented-in-multiple-jvm-languages-faa733cab249/).
+[my blog](https://medium.com/@xrrocha/spelling-suggester-implemented-in-multiple-jvm-languages-faa733cab249/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
 implementations can prove quite nuanced). By embracing ease of implementation over optimal 
