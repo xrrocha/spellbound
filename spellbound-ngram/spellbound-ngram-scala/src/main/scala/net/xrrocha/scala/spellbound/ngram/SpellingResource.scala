@@ -61,7 +61,7 @@ object SpellingResource {
     word.trim.toLowerCase
 
   // Default ngram extraction implementation
-  def ngrams(word: String, ngramLength: Int)
+  def ngrams(word: String, ngramLength: Int = 3)
             (implicit normalize: Word => NormalizedWord = SpellingResource.normalize)
   : Set[NGram] =
     normalize(word)
