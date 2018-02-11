@@ -139,7 +139,7 @@ public class Main {
         })
         // Suppress non-typo, dictionary words having no suggestions
         .filter(entry -> !entry.getValue().isEmpty())
-        // Pass word/suggestions pair to user-supplied consumer
+        // Pass word/suggestions pair to user-supplied lambda
         .map(entry -> process.apply(entry.getKey(), entry.getValue()));
   }
 
