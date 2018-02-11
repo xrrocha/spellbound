@@ -23,9 +23,9 @@ import static java.util.Collections.emptyList;
 public class SpellingCorrector {
 
   /**
-   * The word-to-rank dictionary. The lower the rank the higher the word's
-   * occurrence (e.g. <em>the</em> has rank = 1 while <em>triose</em>
-   * has rank = 106295).
+   * The word-to-rank dictionary. The lower the rank the higher the word's occurence
+   * (e.g. <em>the</em> has rank <code>1</code> while <em>triose</em> has rank
+   * <code>106295</code>).
    */
   private final Map<String, Integer> dictionary;
 
@@ -157,7 +157,7 @@ public class SpellingCorrector {
    * <li>Coalescing duplicates</li>
    * <li>Filtering out non-dictionary words</li>
    * <li>Ordering by rank</li>
-   * <li>Collecting as <code>List&lt;String&gt;</code></String></code></li>
+   * <li>Collecting as <code>List&lt;String&gt;</code></li>
    * </ul>
    *
    * @param editResults The (possibly empty) list of dictionary words reconstituted
