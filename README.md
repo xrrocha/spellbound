@@ -2,13 +2,14 @@
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion.png" align="left">
 
-This tutorial project implements a simple (but functional) spelling suggestion service.
-Accompanying blog entries are available at
-[my blog](https://medium.com/@xrrocha/spelling-suggester-implemented-in-multiple-jvm-languages-faa733cab249/).
+This tutorial project implements a simple spelling suggestion service in multiple JVM languages.
+Accompanying blog entries are cross-published at
+[medium.com](https://medium.com/@xrrocha/spelling-suggester-implemented-in-multiple-jvm-languages-faa733cab249/)
+and [my blog](http://xrrocha.net/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
 implementations can prove quite nuanced). By embracing ease of implementation over optimal 
-performance we help Java developers focus on the alternative JVM language implementations,
+performance we allow Java developers to focus on the comparative JVM language implementations,
 unencumbered by needless complexity.
 
 Within these relaxed constraints, spelling suggestion provides an excellent subject to illustrate 
