@@ -1,8 +1,5 @@
 package net.xrrocha.java.spellbound.norvig;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -53,13 +50,6 @@ public class SpellingCorrector {
           SpellingCorrector::replaces,
           SpellingCorrector::inserts
       );
-
-  /**
-   * The logger instance.
-   */
-  @SuppressWarnings("unused")
-  private static final Logger logger =
-      LoggerFactory.getLogger(SpellingCorrector.class);
 
   /**
    * Constructor

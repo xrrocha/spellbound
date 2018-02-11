@@ -1,8 +1,5 @@
 package net.xrrocha.java.spellbound.norvig;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,12 +26,6 @@ import static java.util.stream.Collectors.toMap;
  * </p>
  */
 public class Main {
-
-  /**
-   * The logger instance.
-   */
-  @SuppressWarnings("unused")
-  private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
   /**
    * <p>
