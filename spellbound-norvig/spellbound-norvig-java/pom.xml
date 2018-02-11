@@ -17,4 +17,38 @@
 
     <name>Norvig Spelling Suggestion Java</name>
     <url>http://xrrocha.net/post/spelling-jvm-1.0/</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${shade-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+                    <transformers>
+                        <transformer
+                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <Main-Class>net.xrrocha.java.spellbound.norvig.Main</Main-Class>
+                                <Build-Number>${project.version}</Build-Number>
+                            </manifestEntries>
+                        </transformer>
+                    </transformers>
+                    <artifactSet>
+                        <includes>com.google.guava:guava</includes>
+                    </artifactSet>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
