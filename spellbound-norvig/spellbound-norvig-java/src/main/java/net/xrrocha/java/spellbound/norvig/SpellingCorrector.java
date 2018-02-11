@@ -35,7 +35,7 @@ public class SpellingCorrector {
   /**
    * ASCII-only alphabet (no diacritic/accent support).
    */
-  static final Pattern ALPHABETIC = Pattern.compile("^[a-z]+$");
+  private static final Pattern ALPHABETIC = Pattern.compile("^[a-z]+$");
 
   /**
    * String array with a letter per element.
@@ -46,12 +46,13 @@ public class SpellingCorrector {
    * List of edits to be applied in tandem to each word split list
    * ("code as data").
    */
-  static final List<Function<List<Split>, Stream<String>>> edits = List.of(
-      SpellingCorrector::deletes,
-      SpellingCorrector::transposes,
-      SpellingCorrector::replaces,
-      SpellingCorrector::inserts
-  );
+  private static final List<Function<List<Split>, Stream<String>>> edits =
+      List.of(
+          SpellingCorrector::deletes,
+          SpellingCorrector::transposes,
+          SpellingCorrector::replaces,
+          SpellingCorrector::inserts
+      );
 
   /**
    * The logger instance.
@@ -135,7 +136,7 @@ public class SpellingCorrector {
    * @param typo The typo to use in regenerating dictionary words
    * @return The list of dictionary words reconstituted from typo
    */
-  List<String> edits1(String typo) {
+  private List<String> edits1(String typo) {
 
     // Generate all splits for the word so as to account for typos originating
     // in the insertion of a space in the middle of the word
@@ -154,7 +155,7 @@ public class SpellingCorrector {
    * @param typo The typo to use in regenerating dictionary words
    * @return The (possibly empty) list of dictionary words re-created from typo
    */
-  List<String> edits2(String typo) {
+  private List<String> edits2(String typo) {
     // Repeatedly apply all 4 edits twice, and in parallel, to each split.
     // Packing removes duplicates, ensures result presence in dictionary and
     // orders by rank
@@ -176,7 +177,7 @@ public class SpellingCorrector {
    *                    from typo
    * @return The <code>List&lt;String&gt;</code> resulting from stream processing
    */
-  List<String> pack(Stream<String> editResults) {
+  private List<String> pack(Stream<String> editResults) {
     return editResults
         // Remove duplicates
         .distinct()
@@ -311,7 +312,7 @@ public class SpellingCorrector {
      * @param left  The left word fragment
      * @param right The right word fragment
      */
-    public Split(String left, String right) {
+    Split(String left, String right) {
       checkNotNull(left);
       checkNotNull(right);
       this.left = left;
