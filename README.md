@@ -9,7 +9,7 @@ and [my blog](http://xrrocha.net/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
 implementations can prove quite nuanced). By embracing ease of implementation over optimal 
-performance we allow Java developers to focus on the comparative JVM language implementations,
+performance we allow readers to focus on comparing the JVM languages and their implementations,
 unencumbered by needless complexity.
 
 Within these relaxed constraints, spelling suggestion provides an excellent subject to illustrate 
@@ -30,8 +30,9 @@ _idiomatic_) implementations in today's most relevant alternative JVM languages:
 ### Two Approaches to Spelling Suggestion
 
 This projects illustrates two simple approaches to spelling suggestion, each implemented in the
-three above-mentioned languages (Java, Kotlin, Scala and Xtend). A separate tutorial document is
-written for each approach/language pair contrasting the Java solution with that of each JVM language.
+four above-mentioned languages (Java, Kotlin, Scala and Xtend). A separate tutorial document is
+written for each approach/language pair contrasting the Java solution to that of each alternative
+JVM language.
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/peter-norvig.png" width="25%" height="25%" align="left">
 
