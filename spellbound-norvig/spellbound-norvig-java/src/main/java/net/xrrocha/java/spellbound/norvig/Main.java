@@ -171,7 +171,7 @@ public class Main {
    * @return The resulting of word-to-rank mappings
    */
   static Map<String, Integer> loadDictionary(Stream<String> lines) {
-    Map<String, Integer> dictionary= lines
+    return lines
         .map(line -> {
           // Split tab-delimited line into fields
           String[] fields = line.split("\\t", 2);
@@ -189,7 +189,6 @@ public class Main {
         )
         // Convert stream of word/rank entries into a map
         .collect(toMap(Entry::getKey, Entry::getValue));
-    return dictionary;
   }
 
   /**
