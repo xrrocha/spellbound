@@ -1,5 +1,8 @@
 package net.xrrocha.java.spellbound.norvig;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -7,13 +10,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Java implementation of PeterNorvig's
@@ -23,9 +26,9 @@ import static java.util.Collections.emptyList;
 public class SpellingCorrector {
 
   /**
-   * The word-to-rank dictionary. The lower the rank the higher the word's occurence
-   * (e.g. <em>the</em> has rank <code>1</code> while <em>triose</em> has rank
-   * <code>106295</code>).
+   * The word-to-rank dictionary. The lower the rank the higher the word's
+   * occurrence (e.g. <em>the</em> has rank <code>1</code> while
+   * <em>triose</em> has rank <code>106295</code>).
    */
   private final Map<String, Integer> dictionary;
 
@@ -43,12 +46,19 @@ public class SpellingCorrector {
    * List of edits to be applied in tandem to each word split list
    * ("code as data").
    */
-  static final List<Function<List<Split>, List<String>>> edits = List.of(
+  static final List<Function<List<Split>, Stream<String>>> edits = List.of(
       SpellingCorrector::deletes,
       SpellingCorrector::transposes,
       SpellingCorrector::replaces,
       SpellingCorrector::inserts
   );
+
+  /**
+   * The logger instance.
+   */
+  @SuppressWarnings("unused")
+  private static final Logger logger =
+      LoggerFactory.getLogger(SpellingCorrector.class);
 
   /**
    * Constructor
@@ -61,17 +71,19 @@ public class SpellingCorrector {
     this.dictionary = dictionary;
   }
 
+
   /**
    * Return one or more suggested corrections for a given word.
-   * If the word is present in the dictionary then an <code>Optional.empty()</code>
-   * is returned indicating no suggestions apply. If the word is <em>not</em>
-   * present in the dictionary a (possibly empty) list  of suggested corrections is
-   * returned.
+   * If the word is present in the dictionary then an
+   * <code>Optional.empty()</code> is returned indicating no suggestions
+   * apply. If the word is <em>not</em> present in the dictionary a (possibly
+   * empty) list  of suggested corrections is returned.
    *
    * @param word The word to be validated against dictionary
-   * @return <code>Optional.empty()</code> if the word is present in the dictionary
-   * or an optional <code>List&lt;String&gt;</code> containing correction suggestions.
-   * This list will contain no elements if a gibberish word is passed that resembles no
+   * @return <code>Optional.empty()</code> if the word is present in the
+   * dictionary or an optional <code>List&lt;String&gt;</code>
+   * containing correction suggestions. This list will contain no
+   * elements if a gibberish word is passed that resembles no
    * dictionary word.
    */
   public Optional<List<String>> getCorrections(String word) {
@@ -85,10 +97,10 @@ public class SpellingCorrector {
     }
 
     // The correction suggestions to be returned
-    final Optional<List<String>> corrections;
+    final List<String> corrections;
 
     // Suggestions for one-edit typos: most typos contain just one error
-    List<String> corrections1 = edits1(normalizedWord);
+    final List<String> corrections1 = edits1(normalizedWord);
 
     // If edit1 yields no dictionary word, let's try with 2 edits.
     // Some typos stem from 2 errors; few come from more than 2
@@ -100,20 +112,20 @@ public class SpellingCorrector {
       // No results even for 2 edits: return empty list
       if (corrections2.isEmpty()) {
 
-        corrections = Optional.of(emptyList());
+        corrections = emptyList();
       } else {
 
         // edit2 did produce results, yay!
-        corrections = Optional.of(corrections2);
+        corrections = corrections2;
       }
     } else {
 
       // edit1 did produce results, yay!
-      corrections = Optional.of(corrections1);
+      corrections = corrections1;
     }
 
     // Return (possibly empty) list of suggested corrections
-    return corrections;
+    return Optional.of(corrections);
   }
 
   /**
@@ -132,7 +144,7 @@ public class SpellingCorrector {
     // Generate and apply all 4 edits (in parallel) to each split. Packing removes
     // duplicates, ensures result presence in dictionary and orders by rank
     return pack(edits.parallelStream()
-        .flatMap(edit -> edit.apply(wordSplits).stream()));
+        .flatMap(edit -> edit.apply(wordSplits)));
   }
 
   /**
@@ -140,7 +152,7 @@ public class SpellingCorrector {
    * reversing edits to nested list of words (apply edit1 two times).
    *
    * @param typo The typo to use in regenerating dictionary words
-   * @return The (possibly empty) list of dictionary words reconstituted from typo
+   * @return The (possibly empty) list of dictionary words re-created from typo
    */
   List<String> edits2(String typo) {
     // Repeatedly apply all 4 edits twice, and in parallel, to each split.
@@ -172,7 +184,7 @@ public class SpellingCorrector {
         .filter(dictionary::containsKey)
         // Sort by word rank so more frequent words show first
         .sorted(Comparator.comparing(dictionary::get))
-        .collect(Collectors.toList());
+        .collect(toList());
   }
 
   /**
@@ -195,7 +207,7 @@ public class SpellingCorrector {
           String right = word.substring(i);
           return new Split(left, right);
         })
-        .collect(Collectors.toList());
+        .collect(toList());
   }
 
   /**
@@ -206,11 +218,10 @@ public class SpellingCorrector {
    * @return The list of words resulting from 1-character deletions
    * applied to every split
    */
-  static List<String> deletes(List<Split> splits) {
+  static Stream<String> deletes(List<Split> splits) {
     return splits.stream()
         .filter(split -> !split.right.isEmpty())
-        .map(split -> split.left + split.right.substring(1))
-        .collect(Collectors.toList());
+        .map(split -> split.left + split.right.substring(1));
   }
 
   /**
@@ -221,14 +232,13 @@ public class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-character inversions applied to every split
    */
-  static List<String> transposes(List<Split> splits) {
+  static Stream<String> transposes(List<Split> splits) {
     return splits.stream()
         .filter(split -> split.right.length() > 1)
         .map(split ->
             split.left + split.right.substring(1, 2) +
                 split.right.substring(0, 1) +
-                split.right.substring(2))
-        .collect(Collectors.toList());
+                split.right.substring(2));
   }
 
   /**
@@ -239,15 +249,12 @@ public class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-character substitutions applied to every split
    */
-  static List<String> replaces(List<Split> splits) {
+  static Stream<String> replaces(List<Split> splits) {
     return splits.stream()
         .filter(split -> !split.right.isEmpty())
         .flatMap(split ->
             Arrays.stream(LETTERS).map(letter ->
-                split.left + letter + split.right.substring(1)
-            )
-        )
-        .collect(Collectors.toList());
+                split.left + letter + split.right.substring(1)));
   }
 
   /**
@@ -259,19 +266,16 @@ public class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-letter substitutions applied to every split
    */
-  static List<String> inserts(List<Split> splits) {
+  static Stream<String> inserts(List<Split> splits) {
     return splits.stream()
         .flatMap(split ->
             Arrays.stream(LETTERS).map(letter ->
-                split.left + letter + split.right
-            )
-        )
-        .collect(Collectors.toList());
+                split.left + letter + split.right));
   }
 
   /**
-   * Normalize incoming words by removing any surrounding whitespace, converting to
-   * lower case and validating strict alphabetic composition.
+   * Normalize incoming words by removing any surrounding whitespace, converting
+   * to lower case and validating strict alphabetic composition.
    *
    * @param word The word to be normalized
    * @return The normalized word
@@ -288,8 +292,8 @@ public class SpellingCorrector {
   }
 
   /**
-   * Immutable data class embodying a left/right pair corresponding to a word split
-   * at a given position.
+   * Immutable data class embodying a left/right pair corresponding to a word
+   * split at a given position.
    */
   static class Split {
     /**

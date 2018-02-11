@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.fail;
@@ -23,18 +24,19 @@ import static org.junit.Assert.assertTrue;
 
 public class SpellingCorrectorTest {
 
-  private final SpellingCorrector spellingCorrector = new SpellingCorrector(Map.of(
-      "centry", 93832,
-      "contra", 13242,
-      "country", 393,
-      "ricksha", 1000000,
-      "sleeping", 5216,
-      "sliping", 1000000,
-      "sloping", 27280,
-      "spelling", 7302,
-      "spewing", 41780,
-      "spiling", 1000000
-  ));
+  private final SpellingCorrector spellingCorrector =
+      new SpellingCorrector(Map.of(
+          "centry", 93832,
+          "contra", 13242,
+          "country", 393,
+          "ricksha", 1000000,
+          "sleeping", 5216,
+          "sliping", 1000000,
+          "sloping", 27280,
+          "spelling", 7302,
+          "spewing", 41780,
+          "spiling", 1000000
+      ));
 
   @Test
   public void yieldsEmptyOnDictionaryWord() {
@@ -46,14 +48,16 @@ public class SpellingCorrectorTest {
     List<String> expectedCorrections = List.of(
         "spelling", "spewing", "spiling"
     );
-    Optional<List<String>> actualCorrections = spellingCorrector.getCorrections("speling");
+    Optional<List<String>> actualCorrections =
+        spellingCorrector.getCorrections("speling");
     assertTrue(actualCorrections.isPresent());
     assertTrue(equals(expectedCorrections, actualCorrections.get()));
   }
 
   @Test
   public void yieldsNoCorrectionsOnGibberish() {
-    Optional<List<String>> corrections = spellingCorrector.getCorrections("xwphjwl");
+    Optional<List<String>> corrections =
+        spellingCorrector.getCorrections("xwphjwl");
     assertTrue(corrections.isPresent());
     assertTrue(corrections.get().isEmpty());
   }
@@ -88,7 +92,7 @@ public class SpellingCorrectorTest {
     List<String> expectedDeletes = List.of(
         "ally", "wlly", "waly", "waly", "wall"
     );
-    List<String> actualDeletes = deletes(splits);
+    List<String> actualDeletes = deletes(splits).collect(Collectors.toList());
     assertEquals(actualDeletes.size(), name.length());
 
     assertTrue(equals(expectedDeletes, actualDeletes));
@@ -102,7 +106,8 @@ public class SpellingCorrectorTest {
     List<String> expectedTransposes = List.of(
         "laice", "ailce", "alcie", "aliec"
     );
-    List<String> actualTransposes = transposes(splits);
+    List<String> actualTransposes =
+        transposes(splits).collect(Collectors.toList());
     assertEquals(actualTransposes.size(), name.length() - 1);
 
     assert (equals(expectedTransposes, actualTransposes));
@@ -128,7 +133,7 @@ public class SpellingCorrectorTest {
         "asok", "asol", "asom", "ason", "asoo", "asop", "asoq", "asor",
         "asos", "asot", "asou", "asov", "asow", "asox", "asoy", "asoz"
     );
-    List<String> actualReplaces = replaces(splits);
+    List<String> actualReplaces = replaces(splits).collect(Collectors.toList());
     assertEquals(actualReplaces.size(), LETTERS.length * name.length());
 
     assertTrue(equals(expectedReplaces, actualReplaces));
@@ -160,7 +165,7 @@ public class SpellingCorrectorTest {
         "asokp", "asokq", "asokr", "asoks", "asokt", "asoku", "asokv",
         "asokw", "asokx", "asoky", "asokz"
     );
-    List<String> actualInserts = inserts(splits);
+    List<String> actualInserts = inserts(splits).collect(Collectors.toList());
     assertEquals(actualInserts.size(), LETTERS.length * (name.length() + 1));
 
     assertTrue(equals(expectedInserts, actualInserts));
