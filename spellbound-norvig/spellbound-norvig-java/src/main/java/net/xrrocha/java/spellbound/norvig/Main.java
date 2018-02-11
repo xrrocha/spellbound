@@ -73,18 +73,18 @@ public class Main {
 
     // The first argument points to the file containing a tab-delimited
     // (word/rank) dictionary
-    final String dictionaryFilename = args[0];
+    String dictionaryFilename = args[0];
 
     // Create a (possibly empty) stream of filenames to process
-    final Stream<String> filenames = Arrays.stream(args, 1, args.length);
+    Stream<String> filenames = Arrays.stream(args, 1, args.length);
     // Create a lazily-collected stream of lines from the input files (or the
     // operating system's standard input)
-    final Stream<String> inputLines = createInputLineStream(filenames);
+    Stream<String> inputLines = createInputLineStream(filenames);
 
     try {
 
       // Load the dictionary from the given file
-      final Map<String, Integer> dictionary =
+      Map<String, Integer> dictionary =
           loadDictionary(getLinesFrom(dictionaryFilename));
       // Create a spelling corrector instance from the dictionary
       SpellingCorrector spellingCorrector = new SpellingCorrector(dictionary);

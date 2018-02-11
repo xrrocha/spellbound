@@ -97,10 +97,10 @@ public class SpellingCorrector {
     }
 
     // The correction suggestions to be returned
-    final List<String> corrections;
+    List<String> corrections;
 
     // Suggestions for one-edit typos: most typos contain just one error
-    final List<String> corrections1 = edits1(normalizedWord);
+    List<String> corrections1 = edits1(normalizedWord);
 
     // If edit1 yields no dictionary word, let's try with 2 edits.
     // Some typos stem from 2 errors; few come from more than 2
