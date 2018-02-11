@@ -1,7 +1,6 @@
 ## Spellbound: Spelling Suggestion Implemented in Multiple JVM languages
 
-<img src="https://raw.githubusercontent
-.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion-strip.png" align="left">
+<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion-strip.png" align="left">
 
 This tutorial project implements a simple spelling suggestion service in multiple JVM languages.
 Accompanying blog entries are cross-published at
