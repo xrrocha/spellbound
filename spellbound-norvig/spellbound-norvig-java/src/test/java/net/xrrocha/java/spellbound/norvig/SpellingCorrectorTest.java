@@ -1,6 +1,6 @@
 package net.xrrocha.java.spellbound.norvig;
 
-import net.xrrocha.java.spellbound.norvig.SpellingCorrector.Split;
+import net.xrrocha.java.spellbound.norvig.SpellingCorrector.WordSplit;
 import org.junit.Test;
 
 import java.util.List;
@@ -66,18 +66,18 @@ public class SpellingCorrectorTest {
   public void buildsSplitsCorrectly() {
     String name = "dilbert";
 
-    List<Split> expectedSplits = List.of(
-        new Split("", "dilbert"),
-        new Split("d", "ilbert"),
-        new Split("di", "lbert"),
-        new Split("dil", "bert"),
-        new Split("dilb", "ert"),
-        new Split("dilbe", "rt"),
-        new Split("dilber", "t"),
-        new Split("dilbert", "")
+    List<WordSplit> expectedSplits = List.of(
+        new WordSplit("", "dilbert"),
+        new WordSplit("d", "ilbert"),
+        new WordSplit("di", "lbert"),
+        new WordSplit("dil", "bert"),
+        new WordSplit("dilb", "ert"),
+        new WordSplit("dilbe", "rt"),
+        new WordSplit("dilber", "t"),
+        new WordSplit("dilbert", "")
     );
 
-    List<Split> actualSplits = splits(name);
+    List<WordSplit> actualSplits = splits(name);
 
     assertEquals(name.length() + 1, actualSplits.size());
 
@@ -87,7 +87,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsDeletesCorrectly() {
     String name = "wally";
-    List<Split> splits = splits(name);
+    List<WordSplit> splits = splits(name);
 
     List<String> expectedDeletes = List.of(
         "ally", "wlly", "waly", "waly", "wall"
@@ -101,7 +101,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsTransposesCorrectly() {
     String name = "alice";
-    List<Split> splits = splits(name);
+    List<WordSplit> splits = splits(name);
 
     List<String> expectedTransposes = List.of(
         "laice", "ailce", "alcie", "aliec"
@@ -116,7 +116,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsReplacesCorrectly() {
     String name = "asok";
-    List<Split> splits = splits(name);
+    List<WordSplit> splits = splits(name);
 
     List<String> expectedReplaces = List.of(
         "asok", "bsok", "csok", "dsok", "esok", "fsok", "gsok", "hsok",
@@ -141,31 +141,44 @@ public class SpellingCorrectorTest {
 
   @Test
   public void buildsInsertsCorrectly() {
-    String name = "asok";
-    List<Split> splits = splits(name);
+    String name = "dgbert";
+    List<WordSplit> splits = splits(name);
 
     List<String> expectedInserts = List.of(
-        "aasok", "basok", "casok", "dasok", "easok", "fasok", "gasok",
-        "hasok", "iasok", "jasok", "kasok", "lasok", "masok", "nasok",
-        "oasok", "pasok", "qasok", "rasok", "sasok", "tasok", "uasok",
-        "vasok", "wasok", "xasok", "yasok", "zasok", "aasok", "absok",
-        "acsok", "adsok", "aesok", "afsok", "agsok", "ahsok", "aisok",
-        "ajsok", "aksok", "alsok", "amsok", "ansok", "aosok", "apsok",
-        "aqsok", "arsok", "assok", "atsok", "ausok", "avsok", "awsok",
-        "axsok", "aysok", "azsok", "asaok", "asbok", "ascok", "asdok",
-        "aseok", "asfok", "asgok", "ashok", "asiok", "asjok", "askok",
-        "aslok", "asmok", "asnok", "asook", "aspok", "asqok", "asrok",
-        "assok", "astok", "asuok", "asvok", "aswok", "asxok", "asyok",
-        "aszok", "asoak", "asobk", "asock", "asodk", "asoek", "asofk",
-        "asogk", "asohk", "asoik", "asojk", "asokk", "asolk", "asomk",
-        "asonk", "asook", "asopk", "asoqk", "asork", "asosk", "asotk",
-        "asouk", "asovk", "asowk", "asoxk", "asoyk", "asozk", "asoka",
-        "asokb", "asokc", "asokd", "asoke", "asokf", "asokg", "asokh",
-        "asoki", "asokj", "asokk", "asokl", "asokm", "asokn", "asoko",
-        "asokp", "asokq", "asokr", "asoks", "asokt", "asoku", "asokv",
-        "asokw", "asokx", "asoky", "asokz"
+        "adgbert", "bdgbert", "cdgbert", "ddgbert", "edgbert", "fdgbert",
+        "gdgbert", "hdgbert", "idgbert", "jdgbert", "kdgbert", "ldgbert",
+        "mdgbert", "ndgbert", "odgbert", "pdgbert", "qdgbert", "rdgbert",
+        "sdgbert", "tdgbert", "udgbert", "vdgbert", "wdgbert", "xdgbert",
+        "ydgbert", "zdgbert", "dagbert", "dbgbert", "dcgbert", "ddgbert",
+        "degbert", "dfgbert", "dggbert", "dhgbert", "digbert", "djgbert",
+        "dkgbert", "dlgbert", "dmgbert", "dngbert", "dogbert", "dpgbert",
+        "dqgbert", "drgbert", "dsgbert", "dtgbert", "dugbert", "dvgbert",
+        "dwgbert", "dxgbert", "dygbert", "dzgbert", "dgabert", "dgbbert",
+        "dgcbert", "dgdbert", "dgebert", "dgfbert", "dggbert", "dghbert",
+        "dgibert", "dgjbert", "dgkbert", "dglbert", "dgmbert", "dgnbert",
+        "dgobert", "dgpbert", "dgqbert", "dgrbert", "dgsbert", "dgtbert",
+        "dgubert", "dgvbert", "dgwbert", "dgxbert", "dgybert", "dgzbert",
+        "dgbaert", "dgbbert", "dgbcert", "dgbdert", "dgbeert", "dgbfert",
+        "dgbgert", "dgbhert", "dgbiert", "dgbjert", "dgbkert", "dgblert",
+        "dgbmert", "dgbnert", "dgboert", "dgbpert", "dgbqert", "dgbrert",
+        "dgbsert", "dgbtert", "dgbuert", "dgbvert", "dgbwert", "dgbxert",
+        "dgbyert", "dgbzert", "dgbeart", "dgbebrt", "dgbecrt", "dgbedrt",
+        "dgbeert", "dgbefrt", "dgbegrt", "dgbehrt", "dgbeirt", "dgbejrt",
+        "dgbekrt", "dgbelrt", "dgbemrt", "dgbenrt", "dgbeort", "dgbeprt",
+        "dgbeqrt", "dgberrt", "dgbesrt", "dgbetrt", "dgbeurt", "dgbevrt",
+        "dgbewrt", "dgbexrt", "dgbeyrt", "dgbezrt", "dgberat", "dgberbt",
+        "dgberct", "dgberdt", "dgberet", "dgberft", "dgbergt", "dgberht",
+        "dgberit", "dgberjt", "dgberkt", "dgberlt", "dgbermt", "dgbernt",
+        "dgberot", "dgberpt", "dgberqt", "dgberrt", "dgberst", "dgbertt",
+        "dgberut", "dgbervt", "dgberwt", "dgberxt", "dgberyt", "dgberzt",
+        "dgberta", "dgbertb", "dgbertc", "dgbertd", "dgberte", "dgbertf",
+        "dgbertg", "dgberth", "dgberti", "dgbertj", "dgbertk", "dgbertl",
+        "dgbertm", "dgbertn", "dgberto", "dgbertp", "dgbertq", "dgbertr",
+        "dgberts", "dgbertt", "dgbertu", "dgbertv", "dgbertw", "dgbertx",
+        "dgberty", "dgbertz"
     );
     List<String> actualInserts = inserts(splits).collect(Collectors.toList());
+    System.out.println(actualInserts);
     assertEquals(actualInserts.size(), LETTERS.length * (name.length() + 1));
 
     assertTrue(equals(expectedInserts, actualInserts));

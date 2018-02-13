@@ -43,7 +43,7 @@ public class SpellingCorrector {
    * List of edits to be applied in tandem to each word split list
    * ("code as data").
    */
-  private static final List<Function<List<Split>, Stream<String>>> edits =
+  private static final List<Function<List<WordSplit>, Stream<String>>> edits =
       List.of(
           SpellingCorrector::deletes,
           SpellingCorrector::transposes,
@@ -130,7 +130,7 @@ public class SpellingCorrector {
 
     // Generate all splits for the word so as to account for typos originating
     // in the insertion of a space in the middle of the word
-    List<Split> wordSplits = splits(typo);
+    List<WordSplit> wordSplits = splits(typo);
 
     // Generate and apply all 4 edits (in parallel) to each split. Packing removes
     // duplicates, ensures result presence in dictionary and orders by rank
@@ -190,13 +190,13 @@ public class SpellingCorrector {
    * @param word The word to build splits from
    * @return The list of left/right word splits
    */
-  static List<Split> splits(String word) {
+  static List<WordSplit> splits(String word) {
     return IntStream
         .rangeClosed(0, word.length()).boxed()
         .map(i -> {
           String left = word.substring(0, i);
           String right = word.substring(i);
-          return new Split(left, right);
+          return new WordSplit(left, right);
         })
         .collect(toList());
   }
@@ -209,7 +209,7 @@ public class SpellingCorrector {
    * @return The list of words resulting from 1-character deletions
    * applied to every split
    */
-  static Stream<String> deletes(List<Split> splits) {
+  static Stream<String> deletes(List<WordSplit> splits) {
     return splits.stream()
         .filter(split -> !split.right.isEmpty())
         .map(split -> split.left + split.right.substring(1));
@@ -223,11 +223,12 @@ public class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-character inversions applied to every split
    */
-  static Stream<String> transposes(List<Split> splits) {
+  static Stream<String> transposes(List<WordSplit> splits) {
     return splits.stream()
         .filter(split -> split.right.length() > 1)
         .map(split ->
-            split.left + split.right.substring(1, 2) +
+            split.left +
+                split.right.substring(1, 2) +
                 split.right.substring(0, 1) +
                 split.right.substring(2));
   }
@@ -240,7 +241,7 @@ public class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-character substitutions applied to every split
    */
-  static Stream<String> replaces(List<Split> splits) {
+  static Stream<String> replaces(List<WordSplit> splits) {
     return splits.stream()
         .filter(split -> !split.right.isEmpty())
         .flatMap(split ->
@@ -257,7 +258,7 @@ public class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-letter substitutions applied to every split
    */
-  static Stream<String> inserts(List<Split> splits) {
+  static Stream<String> inserts(List<WordSplit> splits) {
     return splits.stream()
         .flatMap(split ->
             Arrays.stream(LETTERS).map(letter ->
@@ -286,7 +287,7 @@ public class SpellingCorrector {
    * Immutable data class embodying a left/right pair corresponding to a word
    * split at a given position.
    */
-  static class Split {
+  static class WordSplit {
     /**
      * The (possibly empty) left word fragment.
      */
@@ -302,7 +303,7 @@ public class SpellingCorrector {
      * @param left  The left word fragment
      * @param right The right word fragment
      */
-    Split(String left, String right) {
+    WordSplit(String left, String right) {
       checkNotNull(left);
       checkNotNull(right);
       this.left = left;
@@ -317,10 +318,10 @@ public class SpellingCorrector {
      */
     @Override
     public boolean equals(Object obj) {
-      if (obj == null || !(obj instanceof Split)) {
+      if (obj == null || !(obj instanceof WordSplit)) {
         return false;
       }
-      Split that = (Split) obj;
+      WordSplit that = (WordSplit) obj;
       return this.left.equals(that.left) && this.right.equals(that.right);
     }
   }
