@@ -28,6 +28,7 @@ alternative JVM languages:
 <br style="clear: both">
 
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/small-norvig.png" align="left">
+
 [Peter Norvig](https://en.wikipedia.org/wiki/Peter_Norvig)'s simple (but 
 powerful) [spelling corrector](http://norvig.com/spell-correct.html) is
 implemented in Java, Kotlin, Scala and Xtend. A separate tutorial blog post is 
