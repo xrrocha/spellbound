@@ -3,9 +3,8 @@
 <img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion-strip.png" align="left">
 
 This tutorial project implements a simple spelling suggestion service in multiple JVM languages.
-Accompanying blog entries are cross-published at
-[medium.com](https://medium.com/@xrrocha/spelling-suggestion-on-the-jvm-51198e879187)
-and [my blog](https://xrrocha.net/post/spelling-jvm-1-introduction/).
+Accompanying blog entries are published at
+[my blog](https://xrrocha.net/post/spelling-jvm-1-introduction/).
 
 Spelling suggestion is a familiar, well-understood domain (though industrial-strength
 implementations can prove quite nuanced). By embracing ease of implementation over optimal 
