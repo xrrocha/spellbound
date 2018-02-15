@@ -38,7 +38,7 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
         .pack()
   }
 
-  fun edits2(typo: String): List<String> =
+  fun edits2(typo: String): Iterable<String> =
       edits1(typo)
           .pFlatMap { edits1(it) }
           .pack()
@@ -47,12 +47,11 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
     map { async(CommonPool) { mapper(it) } }.flatMap { it.await() }
   }
 
-  fun Iterable<String>.pack(): List<String> =
+  fun Iterable<String>.pack(): Iterable<String> =
       this
           .distinct()
           .filter { dictionary.containsKey(it) }
           .map { Pair(it, dictionary[it]) }
           .sortedBy { it.second }
           .map { it.first }
-          .toList()
 }
