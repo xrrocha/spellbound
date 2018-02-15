@@ -33,7 +33,7 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
 
   fun edits1(typo: String): Iterable<String> {
     val wordSplits = Edits.splits(typo)
-    return Edits.AllEdits
+    return Edits.ALL_EDITS
         .pFlatMap { it.candidates(wordSplits) }
         .pack()
   }
@@ -43,6 +43,7 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
           .pFlatMap { edits1(it) }
           .pack()
 
+  // Run (flat) mapper in parallel via coroutines. Akin to Java's Collection.parallelStream()
   fun <A, B> Iterable<A>.pFlatMap(mapper: suspend (A) -> Iterable<B>): Iterable<B> = runBlocking {
     map { async(CommonPool) { mapper(it) } }.flatMap { it.await() }
   }

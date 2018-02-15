@@ -13,7 +13,7 @@ enum class Edits {
     override fun candidates(wordSplits: Iterable<WordSplit>): Iterable<String> =
         wordSplits
             .flatMap { split ->
-              Letters.map { split.left + it + split.right }
+              LETTERS.map { split.left + it + split.right }
             }
   },
   TRANSPOSES {
@@ -31,7 +31,7 @@ enum class Edits {
         wordSplits
             .filterNot { it.right.isEmpty() }
             .flatMap { split ->
-              Letters.map { split.left + it + split.right.substring(1) }
+              LETTERS.map { split.left + it + split.right.substring(1) }
             }
   };
 
@@ -39,9 +39,9 @@ enum class Edits {
 
   companion object {
 
-    val AllEdits = values().toList()
+    val ALL_EDITS = values().toList()
 
-    val Letters = CharRange('a', 'z')
+    val LETTERS = CharRange('a', 'z')
 
     fun splits(word: String): Iterable<WordSplit> =
         IntRange(0, word.length).map {
