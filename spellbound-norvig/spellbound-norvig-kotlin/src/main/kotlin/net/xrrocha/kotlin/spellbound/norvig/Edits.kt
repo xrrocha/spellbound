@@ -45,7 +45,7 @@ object Transposes : Edit {
 object Replaces : Edit {
   override fun candidates(wordSplits: Iterable<WordSplit>): Iterable<String> {
     return wordSplits
-        .filter { !it.right.isEmpty() }
+        .filterNot { it.right.isEmpty() }
         .flatMap { split ->
           SpellingCorrector.Letters.map { split.left + it + split.right.substring(1) }
         }
