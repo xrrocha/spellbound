@@ -10,10 +10,6 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
 
     val Alphabetic = "^[a-z]+$".toRegex()
 
-    val Letters = CharRange('a', 'z')
-
-    val Edits = listOf(Deletes, Inserts, Transposes, Replaces)
-
     fun normalize(word: String) =
         if (Alphabetic.containsMatchIn(word)) word.trim().toLowerCase()
         else throw IllegalArgumentException("Non-alpha word: $word")
@@ -37,7 +33,7 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
 
   fun edits1(typo: String): Iterable<String> {
     val wordSplits = Edit.splits(typo)
-    return Edits
+    return Edit.AllEdits
         .pFlatMap { it.candidates(wordSplits) }
         .pack()
   }
@@ -55,7 +51,7 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
       this
           .distinct()
           .filter { dictionary.containsKey(it) }
-          .map { Pair(it, dictionary.get(it)) }
+          .map { Pair(it, dictionary[it]) }
           .sortedBy { it.second }
           .map { it.first }
           .toList()

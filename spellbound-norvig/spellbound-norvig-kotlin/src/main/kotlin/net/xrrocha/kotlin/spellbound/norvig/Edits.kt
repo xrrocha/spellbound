@@ -1,11 +1,18 @@
 package net.xrrocha.kotlin.spellbound.norvig
 
+import net.xrrocha.kotlin.spellbound.norvig.Edit.Companion.Letters
+
 data class WordSplit(val left: String, val right: String)
 
 interface Edit {
   fun candidates(wordSplits: Iterable<WordSplit>): Iterable<String>
 
   companion object {
+
+    val Letters = CharRange('a', 'z')
+
+    val AllEdits = listOf(Deletes, Inserts, Transposes, Replaces)
+
     fun splits(word: String): Iterable<WordSplit> =
         IntRange(0, word.length).map {
           WordSplit(word.substring(0, it), word.substring(it))
@@ -25,7 +32,7 @@ object Inserts : Edit {
   override fun candidates(wordSplits: Iterable<WordSplit>): Iterable<String> {
     return wordSplits
         .flatMap { split ->
-          SpellingCorrector.Letters.map { split.left + it + split.right }
+          Letters.map { split.left + it + split.right }
         }
   }
 }
@@ -47,7 +54,7 @@ object Replaces : Edit {
     return wordSplits
         .filterNot { it.right.isEmpty() }
         .flatMap { split ->
-          SpellingCorrector.Letters.map { split.left + it + split.right.substring(1) }
+          Letters.map { split.left + it + split.right.substring(1) }
         }
   }
 }
