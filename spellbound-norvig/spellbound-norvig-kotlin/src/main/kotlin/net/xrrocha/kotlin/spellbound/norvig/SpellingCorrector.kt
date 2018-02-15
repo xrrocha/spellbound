@@ -8,10 +8,10 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
 
   companion object {
 
-    val Alphabetic = "^[a-z]+$".toRegex()
+    val ALPHABETIC = "^[a-z]+$".toRegex()
 
     fun normalize(word: String) =
-        if (Alphabetic.containsMatchIn(word)) word.trim().toLowerCase()
+        if (ALPHABETIC.containsMatchIn(word)) word.trim().toLowerCase()
         else throw IllegalArgumentException("Non-alpha word: $word")
   }
 
