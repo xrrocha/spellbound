@@ -32,8 +32,8 @@ class SpellingCorrector(val dictionary: Map<String, Int>) {
   }
 
   fun edits1(typo: String): Iterable<String> {
-    val wordSplits = Edit.splits(typo)
-    return Edit.AllEdits
+    val wordSplits = Edits.splits(typo)
+    return Edits.AllEdits
         .pFlatMap { it.candidates(wordSplits) }
         .pack()
   }
