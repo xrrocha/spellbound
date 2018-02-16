@@ -1,4 +1,4 @@
-package net.xrrocha.spellbound.java.intro;
+package net.xrrocha.spellbound.xtend.intro;
 
 import info.debatty.java.stringsimilarity.Damerau;
 import info.debatty.java.stringsimilarity.interfaces.MetricStringDistance;

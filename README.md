@@ -1,36 +1,22 @@
-## Spellbound: Spelling Suggestion Implemented in Multiple JVM languages
+## Spellbound: A Spelling Suggestion Service implemented in Several JVM languages
 
-<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/spelling-suggestion-strip.png" align="left">
+This tutorial project implements a simple (but usefully functional!) _spelling suggestion service_. 
 
-This tutorial project implements a simple spelling suggestion service in
-multiple JVM languages. Accompanying blog entries are published at
-<a href="https://xrrocha.net/post/spelling-jvm-1-introduction/" target="_blank">my blog</a>.
+While spelling suggestion is a familiar domain, its actual implementation, though not complex, is not trivial either and
+provides an excellent vehicle to illustrate and leverage modern constructs in JVM languages.
 
-Spelling suggestion is a familiar, well-understood domain (though
-industrial-strength implementations can prove quite nuanced). By embracing 
-ease of implementation over optimal performance we allow readers to focus on 
-comparing the JVM languages and their implementations, unencumbered by 
-needless complexity.
+These constructs include aspects such as functional programming, type inference, extension methods, compile-time code generation
+and many other niceties well beyond "traditional" Java usage.
 
-Within these relaxed constraints, spelling suggestion provides an excellent 
-subject to illustrate and contrast the various "better Java" JVM languages. 
-Features discussed include  functional programming, type inference, 
-extension methods, compile-time code generation and other niceties well beyond 
-vanilla Java usage.
+Examples and new concepts are first introduced first in Java 9 so they're immediately understandable to the experienced Java
+programmer. This initial Java formulation, though, aims at illustrating recent additions to the Java language such as modules,
+improved type inference and enhanced lambda support, to name a few.
 
-Examples and new concepts are first introduced first in Java 9 so they're 
-immediately understandable to the experienced Java programmer. The Java 
-implementation is then replicated, _idiomatically_, in today's most relevant 
-alternative JVM languages:
-[Kotlin](https://kotlinlang.org/),
-[Scala](http://scala-lang.org/) and
-[Xtend](http://www.eclipse.org/xtend/).
-<br style="clear: both">
+Importantly, all Java examples are accompanied by equivalent _and idiomatic_ implementations in today's most relevant
+alternative JVM languages: Kotlin, Scala and Xtend. These languages were chosen both because of how readily Java programmers
+can pick their syntax and semantics as well as because how widely they're accepted in the JVM community at large.
 
-<img src="https://raw.githubusercontent.com/xrrocha/spellbound/master/spellbound-snippets/static/images/small-norvig.png" align="left">
-
-[Peter Norvig](https://en.wikipedia.org/wiki/Peter_Norvig)'s simple (but 
-powerful) [spelling corrector](http://norvig.com/spell-correct.html) is
-implemented in Java, Kotlin, Scala and Xtend. A separate tutorial blog post is 
-written for each language that contrasts it with the Java "reference" 
-implementation.
+In this tutorial special attention is given to Kotlin and Scala as they both compile to Javascript thus enabling their use as
+both backend and frontend languages. Xtend is different from other JVM languages in that it compiles to (readable) Java source
+code. Since Xtend's semantics are the same of Java, Java programmers can learn to read the language in hours and use it
+productively in a few days.
