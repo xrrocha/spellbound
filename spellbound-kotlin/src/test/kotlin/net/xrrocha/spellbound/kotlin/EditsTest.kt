@@ -39,7 +39,6 @@ class EditsTest {
                         "dilber"),
                 deletes(dilbertWordSplits)
         )
-        println(ALL_EDITS[1](dilbertWordSplits))
     }
 
     @Test
@@ -101,7 +100,6 @@ class EditsTest {
                 ),
                 inserts(dilbertWordSplits)
         )
-        println(ALL_EDITS[2](dilbertWordSplits))
     }
 
     @Test
