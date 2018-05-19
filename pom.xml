@@ -1,29 +1,33 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.xrrocha</groupId>
-    <artifactId>spellbound-jvm</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.eclipse.xtend</groupId>
-            <artifactId>org.eclipse.xtend.lib</artifactId>
-            <version>2.10.0</version>
-        </dependency>
-    </dependencies>
-    <packaging>pom</packaging>
+	<groupId>net.xrrocha</groupId>
+	<artifactId>spellbound-jvm</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+	</dependencies>
+	<packaging>pom</packaging>
 
-    <name>Norvig Spelling Suggestion for the JVM</name>
-    <url>https://xrrocha.net/post/spelling-jvm-1-introduction/</url>
+	<name>Norvig Spelling Suggestion for the JVM</name>
+	<url>https://xrrocha.net/post/spelling-jvm-1-introduction/</url>
 
-    <modules>
-        <module>spellbound-java</module>
-        <module>spellbound-kotlin</module>
-        <module>spellbound-scala</module>
-        <module>spellbound-xtend</module>
-    </modules>
+	<properties>
+		<java.version>1.9</java.version>
+	</properties>
+	
+	<modules>
+		<module>spellbound-java</module>
+		<module>spellbound-kotlin</module>
+		<module>spellbound-scala</module>
+		<module>spellbound-xtend</module>
+	</modules>
 </project>
