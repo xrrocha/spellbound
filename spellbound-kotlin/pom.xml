@@ -19,8 +19,8 @@
     <url>https://xrrocha.net/post/spelling-jvm-3-kotlin-implementation/</url>
 
     <properties>
-        <kotlin.version>1.2.21</kotlin.version>
-        <kotlinx.version>0.22.2</kotlinx.version>
+        <kotlin.version>1.2.41</kotlin.version>
+        <kotlinx.version>0.22.5</kotlinx.version>
 	<junit.version>4.12</junit.version>
     </properties>
 

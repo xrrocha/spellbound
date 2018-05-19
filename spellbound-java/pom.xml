@@ -19,12 +19,12 @@
     <url>https://xrrocha.net/post/spelling-jvm-2-java-implementation/</url>
 
     <properties>
-	<java.version>9</java.version>
+        <java.version>9</java.version>
         <guava.version>24.0-jre</guava.version>
-	<junit.version>4.12</junit.version>
+        <junit.version>4.12</junit.version>
         <javadoc-plugin.version>3.0.0</javadoc-plugin.version>
-	<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-	<maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
     </properties>
 
     <dependencies>
@@ -33,10 +33,10 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-	    <version>${junit.version}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -46,10 +46,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-		<version>${maven-compiler-plugin.version}</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>1.${java.version}</source>
+                    <target>1.${java.version}</target>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
