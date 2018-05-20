@@ -31,15 +31,16 @@ case class SpellingCorrector(dictionary: Map[Word, Rank]) {
             .sortBy(-dictionary(_)) // reverse by rank
 
 
-        // Dictionary words occurring in edits1() results
         val editResults1 = known(edits1(normalizedWord))
 
         if (editResults1.nonEmpty) {
 
+          // Dictionary words do occur in edits1() results
           editResults1
 
-        } else { // Try edit2() only if edits1() is empty
+        } else {
 
+          // Try edit2() only if edits1() fails; may fail itself
           known(edits2(normalizedWord))
 
         }

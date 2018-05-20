@@ -34,7 +34,7 @@ object Edits {
   )
 
   fun String.wordSplits(): Iterable<WordSplit> =
-      IntRange(0, this.length).map {
+      (0..this.length).map {
         WordSplit(this.substring(0, it), this.substring(it))
       }
 }
