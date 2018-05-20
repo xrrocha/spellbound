@@ -88,12 +88,12 @@ public class SpellingCorrector {
 
     // Corrections for one-edit typos; most typos contain just one error.
     // Packing removes duplicates, ensures presence in dictionary and orders by rank
-    var corrections = pack(edits1(normalizedWord));
+    var corrections = known(edits1(normalizedWord));
 
     // If edit1 yields no in-dictionary word, try with 2 edits.
     // Some typos stem from 2 errors; few come from more than 2
     if (corrections.isEmpty()) {
-      corrections = pack(edits2(normalizedWord));
+      corrections = known(edits2(normalizedWord));
     }
 
     // Return (possibly empty) list of suggested corrections
@@ -142,7 +142,7 @@ public class SpellingCorrector {
    *                    from typo
    * @return The <code>List&lt;String&gt;</code> resulting from stream processing
    */
-  List<String> pack(Stream<String> editResults) {
+  List<String> known(Stream<String> editResults) {
     return editResults
         // Remove duplicates
         .distinct()
