@@ -82,12 +82,12 @@ class SpellingCorrector {
     } else { // Word is not present in dictionary
       // Corrections for one-edit typos; most typos contain just one error.
       // Packing removes duplicates, ensures presence in dictionary and orders by rank
-      var corrections = edits1(normalizedWord).pack;
+      var corrections = edits1(normalizedWord).known;
 
       // If edit1 yields no in-dictionary word, try with 2 edits.
       // Some typos stem from 2 errors; few come from more than 2
       if (corrections.isEmpty()) {
-        corrections = edits2(normalizedWord).pack;
+        corrections = edits2(normalizedWord).known;
       }
 
       // Return (possibly empty) list of suggested corrections
@@ -138,7 +138,7 @@ class SpellingCorrector {
    *                    from typo1
    * @return The <code>List&lt;String&gt;</code> resulting from stream processing
    */
-  private def List<String> pack(Stream<String> editResults) {
+  private def List<String> known(Stream<String> editResults) {
     editResults
     // Remove duplicates
     .distinct
