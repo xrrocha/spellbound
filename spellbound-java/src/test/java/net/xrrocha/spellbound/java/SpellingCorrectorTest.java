@@ -45,28 +45,29 @@ public class SpellingCorrectorTest {
 
   @Test
   public void yieldsCorrectionsOnTypo() {
-    List<String> expectedCorrections = List.of(
+    var expectedCorrections = List.of(
         "spelling", "spewing", "spiling"
     );
-    Optional<List<String>> actualCorrections =
-        spellingCorrector.getCorrections("speling");
+
+    var actualCorrections = spellingCorrector.getCorrections("speling");
+
     assertTrue(actualCorrections.isPresent());
     assertEquals(expectedCorrections, actualCorrections.get());
   }
 
   @Test
   public void yieldsNoCorrectionsOnGibberish() {
-    Optional<List<String>> corrections =
-        spellingCorrector.getCorrections("xwphjwl");
+    var corrections = spellingCorrector.getCorrections("xwphjwl");
+
     assertTrue(corrections.isPresent());
     assertTrue(corrections.get().isEmpty());
   }
 
   @Test
   public void buildsSplitsCorrectly() {
-    String name = "dilbert";
+    var name = "dilbert";
 
-    List<WordSplit> expectedSplits = List.of(
+    var expectedSplits = List.of(
         new WordSplit("", "dilbert"),
         new WordSplit("d", "ilbert"),
         new WordSplit("di", "lbert"),
@@ -77,22 +78,22 @@ public class SpellingCorrectorTest {
         new WordSplit("dilbert", "")
     );
 
-    List<WordSplit> actualSplits = splits(name);
+    var actualSplits = splits(name);
 
     assertEquals(name.length() + 1, actualSplits.size());
-
     assertEquals(expectedSplits, actualSplits);
   }
 
   @Test
   public void buildsDeletesCorrectly() {
-    String name = "wally";
-    List<WordSplit> splits = splits(name);
+    var name = "wally";
+    var splits = splits(name);
 
-    List<String> expectedDeletes = List.of(
+    var expectedDeletes = List.of(
         "ally", "wlly", "waly", "waly", "wall"
     );
-    List<String> actualDeletes = deletes(splits).collect(Collectors.toList());
+    var actualDeletes = deletes(splits).collect(Collectors.toList());
+
     assertEquals(actualDeletes.size(), name.length());
 
     assertEquals(expectedDeletes, actualDeletes);
@@ -100,25 +101,24 @@ public class SpellingCorrectorTest {
 
   @Test
   public void buildsTransposesCorrectly() {
-    String name = "alice";
-    List<WordSplit> splits = splits(name);
+    var name = "alice";
+    var splits = splits(name);
 
-    List<String> expectedTransposes = List.of(
+    var expectedTransposes = List.of(
         "laice", "ailce", "alcie", "aliec"
     );
-    List<String> actualTransposes =
-        transposes(splits).collect(Collectors.toList());
-    assertEquals(actualTransposes.size(), name.length() - 1);
+    var actualTransposes = transposes(splits).collect(Collectors.toList());
 
+    assertEquals(actualTransposes.size(), name.length() - 1);
     assertEquals(expectedTransposes, actualTransposes);
   }
 
   @Test
   public void buildsReplacesCorrectly() {
-    String name = "asok";
-    List<WordSplit> splits = splits(name);
+    var name = "asok";
+    var splits = splits(name);
 
-    List<String> expectedReplaces = List.of(
+    var expectedReplaces = List.of(
         "asok", "bsok", "csok", "dsok", "esok", "fsok", "gsok", "hsok",
         "isok", "jsok", "ksok", "lsok", "msok", "nsok", "osok", "psok",
         "qsok", "rsok", "ssok", "tsok", "usok", "vsok", "wsok", "xsok",
@@ -133,18 +133,18 @@ public class SpellingCorrectorTest {
         "asok", "asol", "asom", "ason", "asoo", "asop", "asoq", "asor",
         "asos", "asot", "asou", "asov", "asow", "asox", "asoy", "asoz"
     );
-    List<String> actualReplaces = replaces(splits).collect(Collectors.toList());
-    assertEquals(actualReplaces.size(), LETTERS.length * name.length());
+    var actualReplaces = replaces(splits).collect(Collectors.toList());
 
+    assertEquals(actualReplaces.size(), LETTERS.length * name.length());
     assertEquals(expectedReplaces, actualReplaces);
   }
 
   @Test
   public void buildsInsertsCorrectly() {
-    String name = "dgbert";
-    List<WordSplit> splits = splits(name);
+    var name = "dgbert";
+    var splits = splits(name);
 
-    List<String> expectedInserts = List.of(
+    var expectedInserts = List.of(
         "adgbert", "bdgbert", "cdgbert", "ddgbert", "edgbert", "fdgbert",
         "gdgbert", "hdgbert", "idgbert", "jdgbert", "kdgbert", "ldgbert",
         "mdgbert", "ndgbert", "odgbert", "pdgbert", "qdgbert", "rdgbert",
@@ -177,9 +177,9 @@ public class SpellingCorrectorTest {
         "dgberts", "dgbertt", "dgbertu", "dgbertv", "dgbertw", "dgbertx",
         "dgberty", "dgbertz"
     );
-    List<String> actualInserts = inserts(splits).collect(Collectors.toList());
-    assertEquals(actualInserts.size(), LETTERS.length * (name.length() + 1));
+    var actualInserts = inserts(splits).collect(Collectors.toList());
 
+    assertEquals(actualInserts.size(), LETTERS.length * (name.length() + 1));
     assertEquals(expectedInserts, actualInserts);
   }
 
@@ -233,7 +233,7 @@ public class SpellingCorrectorTest {
 
   @Test
   public void rejectsInvalidWords() {
-    List<String> nonAlphas = List.of(
+    var nonAlphas = List.of(
         "",
         " \t\n",
         "123",
@@ -251,11 +251,5 @@ public class SpellingCorrectorTest {
   @Test(expected = NullPointerException.class)
   public void rejectsNullWords() {
     spellingCorrector.getCorrections(null);
-  }
-
-  static <T> boolean equals(List<T> s1, List<T> s2) {
-    assertEquals(s1.size(), s2.size());
-    return IntStream.range(0, s1.size())
-        .allMatch(i -> s1.get(i).equals(s2.get(i)));
   }
 }

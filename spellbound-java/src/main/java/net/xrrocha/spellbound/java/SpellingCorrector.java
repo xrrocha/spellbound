@@ -79,39 +79,40 @@ public class SpellingCorrector {
   public Optional<List<String>> getCorrections(String word) {
 
     // Ensure word format matches that of the dictionary: lowercase alphabetics
-    String normalizedWord = normalize(word);
+    var normalizedWord = normalize(word);
 
     // If word occurs in dictionary return no suggestions
     if (dictionary.containsKey(normalizedWord)) {
       return Optional.empty();
     }
 
+    // Suggestions for one-edit typos: most typos contain just one error
+    var corrections1 = edits1(normalizedWord);
+
     // The correction suggestions to be returned
     List<String> corrections;
 
-    // Suggestions for one-edit typos: most typos contain just one error
-    List<String> corrections1 = edits1(normalizedWord);
-
-    // If edit1 yields no dictionary word, let's try with 2 edits.
-    // Some typos stem from 2 errors; few come from more than 2
-    if (corrections1.isEmpty()) {
-
-      // Apply two-level dictionary word reconstitution
-      List<String> corrections2 = edits2(normalizedWord);
-
-      // No results even for 2 edits: return empty list
-      if (corrections2.isEmpty()) {
-
-        corrections = emptyList();
-      } else {
-
-        // edit2 did produce results, yay!
-        corrections = corrections2;
-      }
-    } else {
+    // If edit1 yields non-empty results return them
+    if (!corrections1.isEmpty()) {
 
       // edit1 did produce results, yay!
       corrections = corrections1;
+
+    } else {
+
+      // If edit1 yields no dictionary word, let's try with 2 edits.
+      // Some typos stem from 2 errors; few come from more than 2
+      var corrections2 = edits2(normalizedWord);
+
+      if (!corrections2.isEmpty()) {
+
+        // edit2 did produce results, yay!
+        corrections = corrections2;
+      } else {
+
+        // No results even for 2 edits: return empty list
+        corrections = emptyList();
+      }
     }
 
     // Return (possibly empty) list of suggested corrections
@@ -129,7 +130,7 @@ public class SpellingCorrector {
 
     // Generate all splits for the word so as to account for typos originating
     // in the insertion of a space in the middle of the word
-    List<WordSplit> wordSplits = splits(typo);
+    var wordSplits = splits(typo);
 
     // Generate and apply all 4 edits (in parallel) to each split. Packing removes
     // duplicates, ensures result presence in dictionary and orders by rank
@@ -148,9 +149,8 @@ public class SpellingCorrector {
     // Repeatedly apply all 4 edits twice, and in parallel, to each split.
     // Packing removes duplicates, ensures result presence in dictionary and
     // orders by rank
-    return
-        pack(edits1(typo).parallelStream()
-            .flatMap(w -> edits1(w).stream()));
+    return pack(edits1(typo).parallelStream()
+        .flatMap(w -> edits1(w).stream()));
   }
 
   /**
@@ -317,10 +317,10 @@ public class SpellingCorrector {
      */
     @Override
     public boolean equals(Object obj) {
-      if (obj == null || !(obj instanceof WordSplit)) {
+      if (!(obj instanceof WordSplit)) {
         return false;
       }
-      WordSplit that = (WordSplit) obj;
+      var that = (WordSplit) obj;
       return this.left.equals(that.left) && this.right.equals(that.right);
     }
   }

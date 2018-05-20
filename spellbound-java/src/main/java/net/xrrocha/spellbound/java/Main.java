@@ -44,16 +44,15 @@ public class Main {
    * correction suggestions. For example:
    * </p>
    * <blockquote>
-   * 
+   *
    * <pre>
    * <code>adios,radios,audios,agios,ados,adits,aido</code>
    * </pre>
-   * 
+   *
    * </blockquote>
    *
-   * @param args
-   *          The command-line arguments containing a dictionary filename and zero
-   *          or more textual content filenames.
+   * @param args The command-line arguments containing a dictionary filename and zero
+   *             or more textual content filenames.
    */
   public static void main(String[] args) {
 
@@ -64,10 +63,10 @@ public class Main {
 
     // The first argument points to the file containing a tab-delimited
     // (word/rank) dictionary
-    String dictionaryFilename = args[0];
+    var dictionaryFilename = args[0];
 
     // Create a (possibly empty) stream of filenames to process
-    Stream<String> filenames = Arrays.stream(args, 1, args.length);
+    var filenames = Arrays.stream(args, 1, args.length);
     // Create a lazily-collected stream of lines from the input files (or the
     // operating system's standard input)
     Stream<String> inputLines = createInputLineStream(filenames);
@@ -75,13 +74,16 @@ public class Main {
     try {
 
       // Load the dictionary from the given file
-      Map<String, Integer> dictionary = loadDictionary(getLinesFrom(dictionaryFilename));
+      var dictionary = loadDictionary(getLinesFrom(dictionaryFilename));
       // Create a spelling corrector instance from the dictionary
-      SpellingCorrector spellingCorrector = new SpellingCorrector(dictionary);
+      var spellingCorrector = new SpellingCorrector(dictionary);
 
       // Extract & validate to suggest words onto tab-delimited standard output
-      processInputLines(inputLines, spellingCorrector,
-          (word, suggestions) -> word + "\t" + suggestions.stream().collect(joining(","))).forEach(System.out::println);
+      processInputLines(
+          inputLines,
+          spellingCorrector,
+          (word, suggestions) -> word + "\t" + suggestions.stream().collect(joining(",")))
+          .forEach(System.out::println);
 
     } catch (Exception e) {
       onError("Unexpected error: " + e.toString());
@@ -94,15 +96,12 @@ public class Main {
    * list of correction suggestions per typo. Each typo/suggestion list is then
    * passed to a user-provided consumer for use case-specific processing.
    *
-   * @param inputLines
-   *          The stream of lines to be parsed and validated
-   * @param spellingCorrector
-   *          The spelling corrector used to yield suggestions
-   * @param process
-   *          The user-supplied lambda to process typos
+   * @param inputLines        The stream of lines to be parsed and validated
+   * @param spellingCorrector The spelling corrector used to yield suggestions
+   * @param process           The user-supplied lambda to process typos
    */
   static <T> Stream<T> processInputLines(Stream<String> inputLines, SpellingCorrector spellingCorrector,
-      BiFunction<String, List<String>, T> process) {
+                                         BiFunction<String, List<String>, T> process) {
 
     return inputLines
         // Split lines into space-delimited words
@@ -113,7 +112,8 @@ public class Main {
         .distinct()
         // Generate suggestions for each word
         .map(word -> {
-          List<String> corrections = spellingCorrector.getCorrections(word).stream().flatMap(Collection::stream)
+          List<String> corrections = spellingCorrector.getCorrections(word).stream()
+              .flatMap(Collection::stream)
               .collect(toList());
           return new SimpleEntry<>(word, corrections);
         })
@@ -128,8 +128,7 @@ public class Main {
    * turn. Files are read in stream order. If the filename stream is empty,
    * fallback to the operating system's standard input.
    *
-   * @param filenames
-   *          The (possibly empty) list of filenames
+   * @param filenames The (possibly empty) list of filenames
    * @return The concatenated stream of lines
    */
   static Stream<String> createInputLineStream(Stream<String> filenames) {
@@ -146,21 +145,21 @@ public class Main {
   /**
    * Read, parse and build a dictionary from a stream of tab-delimited lines.
    *
-   * @param lines
-   *          A stream of lines containing a word/rank pair per line
+   * @param lines A stream of lines containing a word/rank pair per line
    * @return The resulting of word-to-rank mappings
    */
   static Map<String, Integer> loadDictionary(Stream<String> lines) {
-    return lines.map(line -> {
-      // Split tab-delimited line into fields
-      String[] fields = line.split("\\t", 2);
-      // First field contains word
-      String word = fields[0];
-      // Second field contains rank
-      int rank = Integer.parseInt(fields[1]);
-      // Return word/rank pair as a <code>Map.Entry<String, Integer></code>
-      return new SimpleEntry<>(word, rank);
-    })
+    return lines
+        .map(line -> {
+          // Split tab-delimited line into fields
+          var fields = line.split("\\t", 2);
+          // First field contains word
+          var word = fields[0];
+          // Second field contains rank
+          var rank = Integer.parseInt(fields[1]);
+          // Return word/rank pair as a <code>Map.Entry<String, Integer></code>
+          return new SimpleEntry<>(word, rank);
+        })
         // Skip invalid words or ranks
         .filter(entry -> SpellingCorrector.isAlphabetic(entry.getKey()) && entry.getValue() > 0)
         // Convert stream of word/rank entries into a map
@@ -170,14 +169,13 @@ public class Main {
   /**
    * Given its name, open a text file as a stream of lines.
    *
-   * @param filename
-   *          A name pointing to a text file
+   * @param filename A name pointing to a text file
    * @return The stream of lines contained in the named file
    */
   static Stream<String> getLinesFrom(String filename) {
     try {
       // Convert filename to path
-      Path path = FileSystems.getDefault().getPath(filename);
+      var path = FileSystems.getDefault().getPath(filename);
       // Create stream of lines from path
       return Files.lines(path);
     } catch (IOException e) {
@@ -189,8 +187,7 @@ public class Main {
    * Print an error message on the operating system's standard error and exit
    * program abnormally.
    *
-   * @param message
-   *          The error message to be printed
+   * @param message The error message to be printed
    */
   static void onError(String message) {
     System.err.println(message);
