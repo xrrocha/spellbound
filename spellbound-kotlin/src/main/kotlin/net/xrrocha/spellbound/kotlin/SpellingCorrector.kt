@@ -116,11 +116,11 @@ class SpellingCorrector(private val dictionary: Map<String, Int>) {
   companion object {
 
     /**
-     * The alpha-only regular expression.
+     * Alphabetics only.
      */
-    private val Alphabetic = "^[a-z]+$".toRegex()
+    private val Alphabetic = "^[\\p{Alpha}]+$".toRegex()
 
-    fun String.isAlphabetic() = Alphabetic.containsMatchIn(this)
+    fun String.isAlphabetic() = Alphabetic.matches(this)
 
     /**
      * Normalize a given alpha-only `word` by trimming any

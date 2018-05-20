@@ -69,7 +69,7 @@ public class SpellingCorrectorTest {
   }
 
   @Test
-  public void buildsSplitsCorrectly() {
+  public void buildsWordsSplitsCorrectly() {
     var name = "dilbert";
 
     var expectedSplits = List.of(
@@ -83,7 +83,7 @@ public class SpellingCorrectorTest {
         new WordSplit("dilbert", "")
     );
 
-    var actualSplits = splits(name);
+    var actualSplits = wordSplits(name);
 
     assertEquals(name.length() + 1, actualSplits.size());
     assertEquals(expectedSplits, actualSplits);
@@ -92,7 +92,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsDeletesCorrectly() {
     var name = "wally";
-    var splits = splits(name);
+    var splits = wordSplits(name);
 
     var expectedDeletes = List.of(
         "ally", "wlly", "waly", "waly", "wall"
@@ -107,7 +107,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsTransposesCorrectly() {
     var name = "alice";
-    var splits = splits(name);
+    var splits = wordSplits(name);
 
     var expectedTransposes = List.of(
         "laice", "ailce", "alcie", "aliec"
@@ -121,7 +121,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsReplacesCorrectly() {
     var name = "asok";
-    var splits = splits(name);
+    var splits = wordSplits(name);
 
     var expectedReplaces = List.of(
         "asok", "bsok", "csok", "dsok", "esok", "fsok", "gsok", "hsok",
@@ -147,7 +147,7 @@ public class SpellingCorrectorTest {
   @Test
   public void buildsInsertsCorrectly() {
     var name = "dgbert";
-    var splits = splits(name);
+    var splits = wordSplits(name);
 
     var expectedInserts = List.of(
         "adgbert", "bdgbert", "cdgbert", "ddgbert", "edgbert", "fdgbert",
@@ -200,9 +200,9 @@ public class SpellingCorrectorTest {
 
   @Test
   public void acceptsAlphabetic() {
-    isAlphabetic("neo");
-    isAlphabetic("Neo");
-    isAlphabetic("NEO");
+    assertTrue(isAlphabetic("neo"));
+    assertTrue(isAlphabetic("Neo"));
+    assertTrue(isAlphabetic("NEO"));
   }
 
   @Test(expected = NullPointerException.class)

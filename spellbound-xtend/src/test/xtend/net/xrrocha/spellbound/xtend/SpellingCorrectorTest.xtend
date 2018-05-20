@@ -11,12 +11,12 @@ import static net.xrrocha.spellbound.xtend.SpellingCorrector.inserts
 import static net.xrrocha.spellbound.xtend.SpellingCorrector.isAlphabetic
 import static net.xrrocha.spellbound.xtend.SpellingCorrector.normalize
 import static net.xrrocha.spellbound.xtend.SpellingCorrector.replaces
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.splits
 import static net.xrrocha.spellbound.xtend.SpellingCorrector.transposes
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertFalse
 import static org.junit.Assert.assertTrue
 import static java.util.stream.Collectors.toList
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.wordSplits
 
 class SpellingCorrectorTest {
 
@@ -69,7 +69,7 @@ class SpellingCorrectorTest {
   }
 
   @Test
-  def void buildsSplitsCorrectly() {
+  def void buildsWordsSplitsCorrectly() {
     val name = 'dilbert'
 
     val expectedSplits = #[
@@ -83,7 +83,7 @@ class SpellingCorrectorTest {
       new WordSplit('dilbert', '')
     ]
 
-    val actualSplits = splits(name)
+    val actualSplits = wordSplits(name)
 
     assertEquals(name.length + 1, actualSplits.size)
 
@@ -93,7 +93,7 @@ class SpellingCorrectorTest {
   @Test
   def void buildsDeletesCorrectly() {
     val name = 'wally'
-    val splits = splits(name)
+    val splits = wordSplits(name)
 
     val expectedDeletes = #[
       'ally', 'wlly', 'waly', 'waly', 'wall'
@@ -107,7 +107,7 @@ class SpellingCorrectorTest {
   @Test
   def void buildsTransposesCorrectly() {
     val name = 'alice'
-    val splits = splits(name)
+    val splits = wordSplits(name)
 
     val expectedTransposes = #[
       'laice',
@@ -124,7 +124,7 @@ class SpellingCorrectorTest {
   @Test
   def void buildsReplacesCorrectly() {
     val name = 'asok'
-    val splits = splits(name)
+    val splits = wordSplits(name)
 
     val expectedReplaces = #[
         'asok', 'bsok', 'csok', 'dsok', 'esok', 'fsok', 'gsok', 'hsok',
@@ -150,7 +150,7 @@ class SpellingCorrectorTest {
   @Test
   def void buildsInsertsCorrectly() {
     val name = 'dgbert'
-    val splits = splits(name)
+    val splits = wordSplits(name)
 
     val expectedInserts = #[
         'adgbert', 'bdgbert', 'cdgbert', 'ddgbert', 'edgbert', 'fdgbert',

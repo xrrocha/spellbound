@@ -28,7 +28,7 @@ class SpellingCorrector {
   /**
    * ASCII-only alphabet (no diacritic/accent support).
    */
-  static val ALPHABETIC = Pattern.compile('^[a-z]+$')
+  static val ALPHABETIC = Pattern.compile('^[\\p{Alpha}]+$')
 
   /**
    * String array with a letter per element.

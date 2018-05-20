@@ -29,9 +29,9 @@ public class SpellingCorrector {
   private final Map<String, Integer> dictionary;
 
   /**
-   * ASCII-only alphabet (no diacritic/accent support).
+   * Alphabetics only.
    */
-  private static final Pattern ALPHABETIC = Pattern.compile("^[a-z]+$");
+  private static final Pattern ALPHABETIC = Pattern.compile("^[\\p{Alpha}]+$");
 
   /**
    * String array with a letter per element.
@@ -191,6 +191,22 @@ public class SpellingCorrector {
   }
 
   /**
+   * Generates all possible inserts from left/right pairs in one or more
+   * wordSplits by inserting every letter between every character in the word
+   * wordSplits. This prolific edit generates
+   * <code>LETTERS.length * (word.length() + 1)</code> words.
+   *
+   * @param splits A list of left/right wordSplits
+   * @return The list of 1-letter substitutions applied to every split
+   */
+  static Stream<String> inserts(List<WordSplit> splits) {
+    return splits.stream()
+        .flatMap(split ->
+            Arrays.stream(LETTERS).map(letter ->
+                split.left + letter + split.right));
+  }
+
+  /**
    * Generates all possible transposes from left/right pairs in one or
    * more wordSplits. This edit generates <code>name.length() - 1</code>
    * words.
@@ -222,22 +238,6 @@ public class SpellingCorrector {
         .flatMap(split ->
             Arrays.stream(LETTERS).map(letter ->
                 split.left + letter + split.right.substring(1)));
-  }
-
-  /**
-   * Generates all possible inserts from left/right pairs in one or more
-   * wordSplits by inserting every letter between every character in the word
-   * wordSplits. This prolific edit generates
-   * <code>LETTERS.length * (word.length() + 1)</code> words.
-   *
-   * @param splits A list of left/right wordSplits
-   * @return The list of 1-letter substitutions applied to every split
-   */
-  static Stream<String> inserts(List<WordSplit> splits) {
-    return splits.stream()
-        .flatMap(split ->
-            Arrays.stream(LETTERS).map(letter ->
-                split.left + letter + split.right));
   }
 
   /**
