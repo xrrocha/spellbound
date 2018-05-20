@@ -4,7 +4,7 @@ object Edits {
 
     data class WordSplit(val left: String, val right: String)
 
-    private val LETTERS = CharRange('a', 'z')
+    val LETTERS = CharRange('a', 'z')
 
     val ALL_EDITS: List<(Iterable<WordSplit>) -> Iterable<String>> = listOf(
             // deletes
@@ -33,8 +33,13 @@ object Edits {
                     }
     )
 
-    fun wordSplits(word: String): Iterable<WordSplit> =
-            IntRange(0, word.length).map {
-                WordSplit(word.substring(0, it), word.substring(it))
+    val deletes = ALL_EDITS[0]
+    val inserts = ALL_EDITS[1]
+    val transposes = ALL_EDITS[2]
+    val replaces = ALL_EDITS[3]
+
+    fun String.wordSplits(): Iterable<WordSplit> =
+            IntRange(0, this.length).map {
+                WordSplit(this.substring(0, it), this.substring(it))
             }
 }

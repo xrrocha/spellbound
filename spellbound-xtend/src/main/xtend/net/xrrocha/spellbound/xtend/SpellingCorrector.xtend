@@ -99,13 +99,13 @@ class SpellingCorrector {
    * Locate one or more dictionary words reconstituted by (brute-force) applying
    * reversing edits to word (only once).
    * 
-   * @param typo The typo to use in regenerating dictionary words
-   * @return The list of dictionary words reconstituted from typo
+   * @param typo1 The typo1 to use in regenerating dictionary words
+   * @return The list of dictionary words reconstituted from typo1
    */
-  static def Stream<String> edits1(String typo) {
+  static def Stream<String> edits1(String typo1) {
 
-    // Generate all splits for typo
-    val wordSplits = splits(typo)
+    // Generate all splits for typo1
+    val wordSplits = splits(typo1)
 
     // Generate and apply all 4 edits (in parallel) to each split. Packing removes
     // duplicates, ensures result presence in dictionary and orders by rank
@@ -116,13 +116,13 @@ class SpellingCorrector {
    * Locate one or more dictionary words reconstituted by (brute-force) applying
    * reversing edits to nested list of words (apply edit1 two times).
    * 
-   * @param typo The typo to use in regenerating dictionary words
-   * @return The (possibly empty) list of dictionary words re-created from typo
+   * @param typo1 The typo1 to use in regenerating dictionary words
+   * @return The (possibly empty) list of dictionary words re-created from typo1
    */
-  def Stream<String> edits2(String typo) {
+  def Stream<String> edits2(String typo1) {
 
     // Repeatedly apply all 4 edits twice, and in parallel, to each split
-    return edits1(typo).flatMap[edits1(it)]
+    return edits1(typo1).flatMap[edits1(it)]
   }
 
   /**
@@ -135,7 +135,7 @@ class SpellingCorrector {
    * </ul>
    * 
    * @param editResults The (possibly empty) list of dictionary words reconstituted
-   *                    from typo
+   *                    from typo1
    * @return The <code>List&lt;String&gt;</code> resulting from stream processing
    */
   private def List<String> pack(Stream<String> editResults) {

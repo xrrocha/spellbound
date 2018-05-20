@@ -22,7 +22,7 @@ class EditsTest {
     fun splitsWordsCorrectly() {
         assertEquals(
                 dilbertWordSplits,
-                wordSplits("dilbert")
+                "dilbert".wordSplits()
         )
     }
 

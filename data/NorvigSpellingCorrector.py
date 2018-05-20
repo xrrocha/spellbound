@@ -44,6 +44,6 @@ def edits2(word):
     return (e2 for e1 in edits1(word) for e2 in edits1(e1))
 
 
-for typo in ['speling', 'sleping', 'ricsha', 'contry']:
-    print(typo + ': ' + ','.join(list(reversed(list(candidates(typo))))))
+for typo1 in ['speling', 'sleping', 'ricsha', 'contry']:
+    print(typo1 + ': ' + ','.join(list(reversed(list(candidates(typo1))))))
 

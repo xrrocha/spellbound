@@ -34,7 +34,7 @@ class Main {
    * </p>
    * <p>
    * Results are always produced onto the operating system's standard output.
-   * Each tab-delimited output line contains a typo and a comma-separated
+   * Each tab-delimited output line contains a typo1 and a comma-separated
    * list of correction suggestions. For example:
    * </p>
    * <blockquote>
@@ -88,8 +88,8 @@ class Main {
    * <p>
    * Consume an iterable of textual lines extracting typos (i.e., words not
    * present in the passed <code>spellingCorrector</code>'s dictionary) and
-   * generating a list of correction suggestions per typo. Each
-   * typo/suggestion list is then passed to a user-provided consumer for use
+   * generating a list of correction suggestions per typo1. Each
+   * typo1/suggestion list is then passed to a user-provided consumer for use
    * case-specific processing.
    * </p>
    * 
@@ -112,7 +112,7 @@ class Main {
       .toSet
       // Generate suggestions for each word
       .map [it -> spellingCorrector.getCorrections(it)] 
-      // Suppress non-typo, dictionary words having no suggestions
+      // Suppress non-typo1, dictionary words having no suggestions
       .filter[value.isPresent]
       // Pass word/suggestions pair to user-supplied lambda
       .map[process.apply(key, value.get)]
