@@ -66,7 +66,7 @@ public class Main {
     var filenames = Arrays.stream(args, 1, args.length);
     // Create a lazily-collected stream of lines from the input files (or the
     // operating system's standard input)
-    Stream<String> inputLines = createInputLineStream(filenames);
+    Stream<String> inputLines = loadInputLines(filenames);
 
     try {
 
@@ -128,7 +128,7 @@ public class Main {
    * @param filenames The (possibly empty) list of filenames
    * @return The concatenated stream of lines
    */
-  static Stream<String> createInputLineStream(Stream<String> filenames) {
+  static Stream<String> loadInputLines(Stream<String> filenames) {
     return filenames
         // Pass each filename to the <code>getLinesFrom</code> method so as to
         // convert it to a stream of lines

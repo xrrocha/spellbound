@@ -43,7 +43,7 @@ fun main(args: Array<String>) {
 
   // Create an iterable of lines from the input files (or the
   // operating system's standard input)
-  val inputLines = createInputLineStream(filenames)
+  val inputLines = loadInputLines(filenames)
 
   // Load the dictionary from the given file
   val dictionary = loadDictionary(dictionaryFile.readLines())
@@ -62,7 +62,6 @@ fun main(args: Array<String>) {
  *
  * @param inputLines        The stream of lines to be parsed and validated
  * @param spellingCorrector The spelling corrector used to yield suggestions
- * @param process           The user-supplied lambda to process typos
  */
 internal fun processInputLines(inputLines: Iterable<String>,
                                spellingCorrector: SpellingCorrector): Iterable<String> {
@@ -92,7 +91,7 @@ internal fun processInputLines(inputLines: Iterable<String>,
  * @param filenames The (possibly empty) list of filenames
  * @return The concatenated stream of lines
  */
-internal fun createInputLineStream(filenames: Iterable<String>): Iterable<String> {
+internal fun loadInputLines(filenames: Iterable<String>): Iterable<String> {
   return if (filenames.none()) System.`in`.bufferedReader().readLines()
   else filenames.flatMap { File(it).readLines() }
 }
