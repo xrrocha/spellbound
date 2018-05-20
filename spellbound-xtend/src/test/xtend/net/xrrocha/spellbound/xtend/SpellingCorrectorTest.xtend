@@ -1,19 +1,18 @@
-package net.xrrocha.spellbound.java
+package net.xrrocha.spellbound.xtend
 
 import java.util.List
-import java.util.Map
-import net.xrrocha.spellbound.java.SpellingCorrector.WordSplit
+import net.xrrocha.spellbound.xtend.SpellingCorrector.WordSplit
 import org.junit.Test
 
 import static junit.framework.TestCase.fail
-import static net.xrrocha.spellbound.java.SpellingCorrector.LETTERS
-import static net.xrrocha.spellbound.java.SpellingCorrector.deletes
-import static net.xrrocha.spellbound.java.SpellingCorrector.inserts
-import static net.xrrocha.spellbound.java.SpellingCorrector.isAlphabetic
-import static net.xrrocha.spellbound.java.SpellingCorrector.normalize
-import static net.xrrocha.spellbound.java.SpellingCorrector.replaces
-import static net.xrrocha.spellbound.java.SpellingCorrector.splits
-import static net.xrrocha.spellbound.java.SpellingCorrector.transposes
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.LETTERS
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.deletes
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.inserts
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.isAlphabetic
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.normalize
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.replaces
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.splits
+import static net.xrrocha.spellbound.xtend.SpellingCorrector.transposes
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertFalse
 import static org.junit.Assert.assertTrue

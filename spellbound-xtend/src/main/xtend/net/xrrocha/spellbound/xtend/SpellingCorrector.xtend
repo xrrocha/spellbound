@@ -1,4 +1,4 @@
-package net.xrrocha.spellbound.java
+package net.xrrocha.spellbound.xtend
 
 import java.util.List
 import java.util.Map

@@ -1,4 +1,4 @@
-package net.xrrocha.spellbound.java
+package net.xrrocha.spellbound.xtend
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -10,7 +10,7 @@ import java.util.Map
 import static java.util.stream.Collectors.toList
 
 import static extension java.lang.Integer.parseInt
-import static extension net.xrrocha.spellbound.java.SpellingCorrector.isAlphabetic
+import static extension net.xrrocha.spellbound.xtend.SpellingCorrector.isAlphabetic
 
 /**
  * Exercise Norvig spelling corrector by passing a dictionary filename and
