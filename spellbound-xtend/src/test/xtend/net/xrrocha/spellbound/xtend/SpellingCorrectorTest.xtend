@@ -16,6 +16,7 @@ import static net.xrrocha.spellbound.xtend.SpellingCorrector.transposes
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertFalse
 import static org.junit.Assert.assertTrue
+import static java.util.stream.Collectors.toList
 
 class SpellingCorrectorTest {
 
@@ -38,13 +39,26 @@ class SpellingCorrectorTest {
   }
 
   @Test
-  def void yieldsCorrectionsOnTypo() {
+  def void yieldsCorrectionsOnOneTypo() {
     val expectedCorrections = #[
       'spelling', 'spewing', 'spiling'
     ]
     val actualCorrections = spellingCorrector.getCorrections('speling')
     assertTrue(actualCorrections.isPresent)
     assertEquals(expectedCorrections, actualCorrections.get)
+  }
+
+  @Test
+  def void yieldsCorrectionsOnTwoTypos() {
+    val typo2 = "spelinmg";
+    val expectedCorrections = List.of(
+        "spelling", "spewing", "spiling"
+    );
+
+    val actualCorrections = spellingCorrector.getCorrections(typo2);
+
+    assertTrue(actualCorrections.isPresent());
+    assertEquals(actualCorrections.get(), expectedCorrections);
   }
 
   @Test
@@ -84,10 +98,10 @@ class SpellingCorrectorTest {
     val expectedDeletes = #[
       'ally', 'wlly', 'waly', 'waly', 'wall'
     ]
-    val actualDeletes = deletes(splits)
+    val actualDeletes = deletes(splits).collect(toList)
     assertEquals(actualDeletes.size, name.length)
 
-    assertEquals(expectedDeletes, actualDeletes.toList)
+    assertEquals(expectedDeletes, actualDeletes)
   }
 
   @Test
@@ -101,7 +115,7 @@ class SpellingCorrectorTest {
       'alcie',
       'aliec'
     ]
-    val actualTransposes = transposes(splits).toList
+    val actualTransposes = transposes(splits).collect(toList)
     assertEquals(actualTransposes.size, name.length - 1)
 
     assertEquals(expectedTransposes, actualTransposes)
@@ -127,7 +141,7 @@ class SpellingCorrectorTest {
         'asok', 'asol', 'asom', 'ason', 'asoo', 'asop', 'asoq', 'asor',
         'asos', 'asot', 'asou', 'asov', 'asow', 'asox', 'asoy', 'asoz'
     ]
-    val actualReplaces = replaces(splits).toList
+    val actualReplaces = replaces(splits).collect(toList)
     assertEquals(actualReplaces.size, LETTERS.length * name.length)
 
     assertEquals(expectedReplaces, actualReplaces)
@@ -171,7 +185,7 @@ class SpellingCorrectorTest {
         'dgberts', 'dgbertt', 'dgbertu', 'dgbertv', 'dgbertw', 'dgbertx',
         'dgberty', 'dgbertz'
     ]
-    val actualInserts = inserts(splits).toList
+    val actualInserts = inserts(splits).collect(toList)
     assertEquals(actualInserts.size, LETTERS.length * (name.length + 1))
 
     assertEquals(expectedInserts, actualInserts)

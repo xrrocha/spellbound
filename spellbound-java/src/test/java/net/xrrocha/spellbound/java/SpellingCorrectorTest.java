@@ -34,7 +34,7 @@ public class SpellingCorrectorTest {
   }
 
   @Test
-  public void yieldsCorrectionsOnTypo1() {
+  public void yieldsCorrectionsOnOneTypo() {
     var typo1 = "speling";
 
     var expectedCorrections = List.of(
@@ -48,7 +48,7 @@ public class SpellingCorrectorTest {
   }
 
   @Test
-  public void yieldsCorrectionsOnTypo2() {
+  public void yieldsCorrectionsOnTwoTypos() {
     var typo2 = "spelinmg";
     var expectedCorrections = List.of(
         "spelling", "spewing", "spiling"

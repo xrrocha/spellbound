@@ -5,12 +5,10 @@ import java.util.Map
 import java.util.Optional
 import java.util.regex.Pattern
 import java.util.stream.Stream
-import java.util.stream.StreamSupport
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkNotNull
-import static java.util.Collections.emptyList
 import static java.util.stream.Collectors.toList
 
 /**
@@ -30,7 +28,7 @@ class SpellingCorrector {
   /**
    * ASCII-only alphabet (no diacritic/accent support).
    */
-  package static val ALPHABETIC = Pattern.compile('^[a-z]+$')
+  static val ALPHABETIC = Pattern.compile('^[a-z]+$')
 
   /**
    * String array with a letter per element.
@@ -41,13 +39,13 @@ class SpellingCorrector {
    * List of edits to be applied in tandem to each word split list
    * ('code as data').
    */
-  val List<(Iterable<WordSplit>) => Iterable<String>> edits = #[
+  static val List<(List<WordSplit>)=>Stream<String>> edits = #[
     [deletes(it)],
     [transposes(it)],
     [replaces(it)],
     [inserts(it)]
   ]
-  
+
   /**
    * Constructor
    * 
@@ -82,30 +80,18 @@ class SpellingCorrector {
       Optional.empty
 
     } else { // Word is not present in dictionary
-    // Suggestions for one-edit typos: most typos contain just one error
-      val corrections1 = edits1(normalizedWord)
+      // Corrections for one-edit typos; most typos contain just one error.
+      // Packing removes duplicates, ensures presence in dictionary and orders by rank
+      var corrections = pack(edits1(normalizedWord));
 
-      // Assign the correction suggestions to be returned
-      val corrections = if (!corrections1.isEmpty) {
-          // edit1 did produce results, yay!
-          corrections1
-        } else {
-          // edits1 yielded no dictionary words; let's try with edits2.
-          // Some typos stem from 2 errors; few come from more than 2
-          // Apply two-level dictionary word reconstitution
-          val corrections2 = edits2(normalizedWord)
-
-          // No results even for 2 edits: return empty list
-          if (!corrections2.isEmpty) {
-            // edit2 did produce results, yay!
-            corrections2
-          } else {
-            emptyList
-          }
-        }
+      // If edit1 yields no in-dictionary word, try with 2 edits.
+      // Some typos stem from 2 errors; few come from more than 2
+      if (corrections.isEmpty()) {
+        corrections = pack(edits2(normalizedWord));
+      }
 
       // Return (possibly empty) list of suggested corrections
-      Optional.of(corrections)
+      return Optional.of(corrections);
     }
   }
 
@@ -116,15 +102,14 @@ class SpellingCorrector {
    * @param typo The typo to use in regenerating dictionary words
    * @return The list of dictionary words reconstituted from typo
    */
-  def List<String> edits1(String typo) {
+  static def Stream<String> edits1(String typo) {
 
-    // Generate all splits for the word so as to account for typos originating
-    // in the insertion of a space in the middle of the word
+    // Generate all splits for typo
     val wordSplits = splits(typo)
 
     // Generate and apply all 4 edits (in parallel) to each split. Packing removes
     // duplicates, ensures result presence in dictionary and orders by rank
-    return edits.parallelStream.flatMap[it.apply(wordSplits).stream].pack
+    edits.parallelStream().flatMap[apply(wordSplits)]
   }
 
   /**
@@ -134,11 +119,54 @@ class SpellingCorrector {
    * @param typo The typo to use in regenerating dictionary words
    * @return The (possibly empty) list of dictionary words re-created from typo
    */
-  def List<String> edits2(String typo) {
-    // Repeatedly apply all 4 edits twice, and in parallel, to each split.
-    // Packing removes duplicates, ensures result presence in dictionary and
-    // orders by rank
-    edits1(typo).parallelStream.flatMap[edits1(it).stream].pack
+  def Stream<String> edits2(String typo) {
+
+    // Repeatedly apply all 4 edits twice, and in parallel, to each split
+    return edits1(typo).flatMap[edits1(it)]
+  }
+
+  /**
+   * Pack results of dictionary word reconstitution by:
+   * <ul>
+   * <li>Coalescing duplicates</li>
+   * <li>Filtering out non-dictionary words</li>
+   * <li>Ordering (descending) by rank</li>
+   * <li>Collecting as <code>List&lt;String&gt;</code></li>
+   * </ul>
+   * 
+   * @param editResults The (possibly empty) list of dictionary words reconstituted
+   *                    from typo
+   * @return The <code>List&lt;String&gt;</code> resulting from stream processing
+   */
+  private def List<String> pack(Stream<String> editResults) {
+    editResults
+    // Remove duplicates
+    .distinct
+    // Select only words present in dictionary
+    .filter[dictionary.containsKey(it)]
+    // Sort descending by word rank so more frequent words show first
+    .sorted[word1, word2|dictionary.get(word2).compareTo(dictionary.get(word1))]
+    .collect(toList)
+  }
+
+  /**
+   * Generate all possible splits from a word. The first split has the
+   * empty string on the left and the complete word on the right. The
+   * last split contains the complete word on the left and the empty
+   * string on the right. Intermediate splits contain everything in-between
+   * e.g. the first 4 letters on the left and the substring starting at the
+   * 5th element on the right). This operation yields
+   * <code>word.length + 1</code> split pairs.
+   * 
+   * @param word The word to build splits from
+   * @return The list of left/right word splits
+   */
+  static def List<WordSplit> splits(String word) {
+    (0 .. word.length).map [
+      val left = word.substring(0, it)
+      val right = word.substring(it)
+      new WordSplit(left, right)
+    ].toList
   }
 
   /**
@@ -149,10 +177,9 @@ class SpellingCorrector {
    * @return The list of words resulting from 1-character deletions
    * applied to every split
    */
-  static def Iterable<String> deletes(Iterable<WordSplit> splits) {
-    splits
-    .filter[!it.wordRight.isEmpty]
-    .map[it.wordLeft + it.wordRight.substring(1)]
+  static def Stream<String> deletes(List<WordSplit> splits) {
+    splits.stream
+    .filter[!wordRight.isEmpty].map[wordLeft + wordRight.substring(1)]
   }
 
   /**
@@ -163,11 +190,11 @@ class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-character inversions applied to every split
    */
-  static def Iterable<String> transposes(Iterable<WordSplit> splits) {
-    splits
-    .filter[it.wordRight.length > 1]
+  static def Stream<String> transposes(List<WordSplit> splits) {
+    splits.stream
+    .filter[wordRight.length > 1]
     .map [
-      it.wordLeft + it.wordRight.substring(1, 2) + it.wordRight.substring(0, 1) + it.wordRight.substring(2)
+      wordLeft + wordRight.substring(1, 2) + wordRight.substring(0, 1) + wordRight.substring(2)
     ]
   }
 
@@ -179,11 +206,14 @@ class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-character substitutions applied to every split
    */
-  static def Iterable<String> replaces(Iterable<WordSplit> splits) {
-    splits
-    .filter[!it.wordRight.isEmpty]
+  static def Stream<String> replaces(List<WordSplit> splits) {
+    splits.stream
+    .filter[!wordRight.isEmpty]
     .flatMap [ split |
-      LETTERS.map[letter|split.wordLeft + letter + split.wordRight.substring(1)]
+      LETTERS.map[letter|
+      	split.wordLeft + letter + split.wordRight.substring(1)
+      ]
+      .stream
     ]
   }
 
@@ -196,9 +226,14 @@ class SpellingCorrector {
    * @param splits A list of left/right splits
    * @return The list of 1-letter substitutions applied to every split
    */
-  static def Iterable<String> inserts(Iterable<WordSplit> splits) {
-    splits
-    .flatMap[split|LETTERS.map[letter|split.wordLeft + letter + split.wordRight]]
+  static def Stream<String> inserts(List<WordSplit> splits) {
+    splits.stream
+    .flatMap[split|
+    	LETTERS.map[letter|
+    		split.wordLeft + letter + split.wordRight
+    	]
+    	.stream
+    ]
   }
 
   /**
@@ -220,57 +255,8 @@ class SpellingCorrector {
   }
 
   /**
-   * Generate all possible splits from a word. The first split has the
-   * empty string on the left and the complete word on the right. The
-   * last split contains the complete word on the left and the empty
-   * string on the right. Intermediate splits contain everything in-between
-   * e.g. the first 4 letters on the left and the substring starting at the
-   * 5th element on the right). This operation yields
-   * <code>word.length + 1</code> split pairs.
-   * 
-   * @param word The word to build splits from
-   * @return The list of left/right word splits
+   * Data class holding two segments of a word.
    */
-  static def Iterable<WordSplit> splits(String word) {
-    (0 .. word.length).map [
-      new WordSplit(word.substring(0, it), word.substring(it))
-    ]
-  }
-
-  /**
-   * Pack results of dictionary word reconstitution by:
-   * <ul>
-   * <li>Coalescing duplicates</li>
-   * <li>Filtering out non-dictionary words</li>
-   * <li>Ordering (descending) by rank</li>
-   * <li>Collecting as <code>List&lt;String&gt;</code></li>
-   * </ul>
-   * 
-   * @param editResults The (possibly empty) list of dictionary words reconstituted
-   *                    from typo
-   * @return The <code>List&lt;String&gt;</code> resulting from stream processing
-   */
-  private def List<String> pack(Stream<String> editResults) {
-    editResults
-    // Remove duplicates
-    .distinct 
-    // Select only words present in dictionary
-    .filter[dictionary.containsKey(it)] 
-    // Sort descending by word rank so more frequent words show first
-    .sorted[word1, word2|dictionary.get(word2).compareTo(dictionary.get(word1))]
-    .collect(toList)
-  }
-
-  /**
-   * Converts an <code>Iterable&lt;T&gt;</code> to a sequential <code>Stream&lt;T&gt;</code>
-   */
-  def <T> Stream<T> stream(Iterable<T> iterable) {
-    StreamSupport.stream(iterable.spliterator, false)
-  }
-
-/**
- * Data class holding two segments of a word.
- */
   @Data
   static class WordSplit {
     val String wordLeft

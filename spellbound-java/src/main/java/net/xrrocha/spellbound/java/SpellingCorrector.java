@@ -90,7 +90,7 @@ public class SpellingCorrector {
     // Packing removes duplicates, ensures presence in dictionary and orders by rank
     var corrections = pack(edits1(normalizedWord));
 
-    // If edit1 yields no dictionary word, try with 2 edits.
+    // If edit1 yields no in-dictionary word, try with 2 edits.
     // Some typos stem from 2 errors; few come from more than 2
     if (corrections.isEmpty()) {
       corrections = pack(edits2(normalizedWord));
@@ -109,7 +109,7 @@ public class SpellingCorrector {
    */
   static Stream<String> edits1(String typo) {
 
-    // Generate all splits for the word
+    // Generate all splits for typo
     var wordSplits = splits(typo);
 
     // Generate and apply all 4 edits (in parallel) to each split
