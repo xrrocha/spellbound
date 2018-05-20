@@ -1,6 +1,6 @@
-package net.xrrocha.spellbound.xtend;
+package net.xrrocha.spellbound.java;
 
-import net.xrrocha.spellbound.xtend.SpellingCorrector.WordSplit;
+import net.xrrocha.spellbound.java.SpellingCorrector.WordSplit;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.fail;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.LETTERS;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.deletes;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.inserts;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.isAlphabetic;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.normalize;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.replaces;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.splits;
-import static net.xrrocha.spellbound.xtend.SpellingCorrector.transposes;
+import static net.xrrocha.spellbound.java.SpellingCorrector.LETTERS;
+import static net.xrrocha.spellbound.java.SpellingCorrector.deletes;
+import static net.xrrocha.spellbound.java.SpellingCorrector.inserts;
+import static net.xrrocha.spellbound.java.SpellingCorrector.isAlphabetic;
+import static net.xrrocha.spellbound.java.SpellingCorrector.normalize;
+import static net.xrrocha.spellbound.java.SpellingCorrector.replaces;
+import static net.xrrocha.spellbound.java.SpellingCorrector.splits;
+import static net.xrrocha.spellbound.java.SpellingCorrector.transposes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -26,16 +26,16 @@ public class SpellingCorrectorTest {
 
   private final SpellingCorrector spellingCorrector =
       new SpellingCorrector(Map.of(
-          "centry", 93832,
-          "contra", 13242,
-          "country", 393,
-          "ricksha", 1000000,
-          "sleeping", 5216,
-          "sliping", 1000000,
-          "sloping", 27280,
-          "spelling", 7302,
-          "spewing", 41780,
-          "spiling", 1000000
+          "centry", 12463,
+          "contra", 93053,
+          "country", 105902,
+          "ricksha", 0,
+          "sleeping", 101079,
+          "sliping", 0,
+          "sloping", 79015,
+          "spelling", 98993,
+          "spewing", 64515,
+          "spiling", 0
       ));
 
   @Test
@@ -51,7 +51,7 @@ public class SpellingCorrectorTest {
     Optional<List<String>> actualCorrections =
         spellingCorrector.getCorrections("speling");
     assertTrue(actualCorrections.isPresent());
-    assertTrue(equals(expectedCorrections, actualCorrections.get()));
+    assertEquals(expectedCorrections, actualCorrections.get());
   }
 
   @Test
@@ -81,7 +81,7 @@ public class SpellingCorrectorTest {
 
     assertEquals(name.length() + 1, actualSplits.size());
 
-    assertTrue(equals(expectedSplits, actualSplits));
+    assertEquals(expectedSplits, actualSplits);
   }
 
   @Test
@@ -95,7 +95,7 @@ public class SpellingCorrectorTest {
     List<String> actualDeletes = deletes(splits).collect(Collectors.toList());
     assertEquals(actualDeletes.size(), name.length());
 
-    assertTrue(equals(expectedDeletes, actualDeletes));
+    assertEquals(expectedDeletes, actualDeletes);
   }
 
   @Test
@@ -110,7 +110,7 @@ public class SpellingCorrectorTest {
         transposes(splits).collect(Collectors.toList());
     assertEquals(actualTransposes.size(), name.length() - 1);
 
-    assert (equals(expectedTransposes, actualTransposes));
+    assertEquals(expectedTransposes, actualTransposes);
   }
 
   @Test
@@ -136,7 +136,7 @@ public class SpellingCorrectorTest {
     List<String> actualReplaces = replaces(splits).collect(Collectors.toList());
     assertEquals(actualReplaces.size(), LETTERS.length * name.length());
 
-    assertTrue(equals(expectedReplaces, actualReplaces));
+    assertEquals(expectedReplaces, actualReplaces);
   }
 
   @Test
@@ -180,7 +180,7 @@ public class SpellingCorrectorTest {
     List<String> actualInserts = inserts(splits).collect(Collectors.toList());
     assertEquals(actualInserts.size(), LETTERS.length * (name.length() + 1));
 
-    assertTrue(equals(expectedInserts, actualInserts));
+    assertEquals(expectedInserts, actualInserts);
   }
 
   @Test(expected = NullPointerException.class)

@@ -1,7 +1,11 @@
-package net.xrrocha.spellbound.xtend;
+package net.xrrocha.spellbound.java;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,11 +13,6 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Java implementation of PeterNorvig's
@@ -23,9 +22,9 @@ import static java.util.stream.Collectors.toList;
 public class SpellingCorrector {
 
   /**
-   * The word-to-rank dictionary. The lower the rank the higher the word's
-   * occurrence (e.g. <em>the</em> has rank <code>1</code> while
-   * <em>triose</em> has rank <code>106295</code>).
+   * The word-to-rank dictionary. The higher the rank the higher the word's
+   * occurrence (e.g. <em>the</em> has rank <code>106295</code> while
+   * <em>triose</em> has rank <code>1</code>).
    */
   private final Map<String, Integer> dictionary;
 
@@ -159,7 +158,7 @@ public class SpellingCorrector {
    * <ul>
    * <li>Coalescing duplicates</li>
    * <li>Filtering out non-dictionary words</li>
-   * <li>Ordering by rank</li>
+   * <li>Ordering (descending) by rank</li>
    * <li>Collecting as <code>List&lt;String&gt;</code></li>
    * </ul>
    *
@@ -173,8 +172,8 @@ public class SpellingCorrector {
         .distinct()
         // Select only words present in dictionary
         .filter(dictionary::containsKey)
-        // Sort by word rank so more frequent words show first
-        .sorted(Comparator.comparing(dictionary::get))
+        // Sort descending by word rank so more frequent words show first
+        .sorted((word1, word2) -> dictionary.get(word2).compareTo(dictionary.get(word1)))
         .collect(toList());
   }
 

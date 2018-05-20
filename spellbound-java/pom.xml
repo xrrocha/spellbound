@@ -72,7 +72,7 @@
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <manifestEntries>
-                                <Main-Class>net.xrrocha.spellbound.xtend.Main</Main-Class>
+                                <Main-Class>net.xrrocha.spellbound.java.Main</Main-Class>
                                 <Build-Number>${project.version}</Build-Number>
                             </manifestEntries>
                         </transformer>
