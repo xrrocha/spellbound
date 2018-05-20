@@ -19,7 +19,6 @@
 	<url>https://xrrocha.net/post/spelling-jvm-5-xtend-implementation/</url>
 
 	<properties>
-		<java.version>9</java.version>
 		<xtend.version>2.14.0.RC1</xtend.version>
 		<xtend-contrib.version>1.1.0</xtend-contrib.version>
 		<xtend-plugin.version>2.14.0.RC1</xtend-plugin.version>
