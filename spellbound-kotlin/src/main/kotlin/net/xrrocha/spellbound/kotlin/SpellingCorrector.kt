@@ -135,7 +135,7 @@ class SpellingCorrector(private val dictionary: Map<String, Int>) {
                 this
                         .distinct()
                         .filter { dictionary.containsKey(it) }
-                        .map { Pair(it, dictionary[it]) }
+                        .map { Pair(it, dictionary[it]!!) }
                         .sortedBy { it.second }
                         .map { it.first }
 

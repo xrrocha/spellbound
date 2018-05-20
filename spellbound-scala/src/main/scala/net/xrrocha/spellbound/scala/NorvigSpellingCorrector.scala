@@ -38,7 +38,7 @@ object NorvigSpellingCorrector extends StrictLogging {
         def known(normalizedWords: Seq[Word]) = {
           normalizedWords
             .filter(dictionary.contains)
-            .sortBy(dictionary(_)) // reverse by rank
+            .sortBy(-dictionary(_)) // reverse by rank
         }
 
         // Dictionary words occurring in edits1() results

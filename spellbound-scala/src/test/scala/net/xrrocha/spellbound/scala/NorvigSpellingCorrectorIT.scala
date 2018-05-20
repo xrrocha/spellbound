@@ -17,16 +17,19 @@ class NorvigSpellingCorrectorIT extends FunSuite with LazyLogging {
 
   test("Suggests appropriate corrections") {
 
-    assert(corrector.getCorrectionsFor("speling").contains(Seq("spelling", "spewing")))
+    def typoYields(typo: Word, words: Seq[Word]) = {
+      val set = corrector.getCorrectionsFor(typo).get.toSet
+      words.forall(set.contains)
+    }
 
-    assert(corrector.getCorrectionsFor("korrectud").contains(Seq("corrected")))
+    assert(typoYields("speling", Seq("spelling", "spewing")))
 
-    assert(corrector.getCorrectionsFor("ricsha").contains(Seq("ricksha")))
+    assert(typoYields("korrectud", Seq("corrected")))
 
-    assert(corrector.getCorrectionsFor("sleping")
-      .contains(Seq("sleeping", "sloping", "slewing", "seeping")))
+    assert(typoYields("ricsha", Seq("ricksha")))
 
-    assert(corrector.getCorrectionsFor("tougt")
-      .contains(Seq("tough", "tout")))
+    assert(typoYields("sleping", Seq("sleeping", "sloping", "slewing", "seeping")))
+
+    assert(typoYields("tougt", Seq("tough", "tout")))
   }
 }
