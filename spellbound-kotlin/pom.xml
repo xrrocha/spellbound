@@ -21,7 +21,7 @@
     <properties>
         <kotlin.version>1.2.41</kotlin.version>
         <kotlinx.version>0.22.5</kotlinx.version>
-	<junit.version>4.12</junit.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <repositories>
@@ -48,10 +48,10 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-	    <version>${junit.version}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
