@@ -7,27 +7,13 @@ import kotlin.test.assertEquals
 
 class EditsTest {
 
+  val deletes = Edits.ALL_EDITS[0]
+  val inserts = Edits.ALL_EDITS[1]
+  val transposes = Edits.ALL_EDITS[2]
+  val replaces = Edits.ALL_EDITS[3]
+
   @Test
   fun splitsWordsCorrectly() {
-
-    val dilbertWordSplits = listOf(
-        WordSplit("", "dilbert"),
-        WordSplit("d", "ilbert"),
-        WordSplit("di", "lbert"),
-        WordSplit("dil", "bert"),
-        WordSplit("dilb", "ert"),
-        WordSplit("dilbe", "rt"),
-        WordSplit("dilber", "t"),
-        WordSplit("dilbert", ""))
-
-    assertEquals(
-        dilbertWordSplits,
-        "dilbert".wordSplits()
-    )
-  }
-
-  @Test
-  fun buildsWordsSplitsCorrectly() {
 
     val expectedSplits = listOf(
         WordSplit("", "dilbert"),
@@ -57,7 +43,7 @@ class EditsTest {
         "ally", "wlly", "waly", "waly", "wall"
     )
 
-    val actualDeletes = Edits.deletes(splits)
+    val actualDeletes = deletes(splits)
 
     assertEquals(actualDeletes.count(), name.length)
     assertEquals(expectedDeletes, actualDeletes)
@@ -102,7 +88,7 @@ class EditsTest {
         "dgberts", "dgbertt", "dgbertu", "dgbertv", "dgbertw", "dgbertx",
         "dgberty", "dgbertz"
     )
-    val actualInserts = Edits.inserts(splits)
+    val actualInserts = inserts(splits)
 
     assertEquals(actualInserts.count(), Edits.LETTERS.count() * (name.length + 1))
     assertEquals(expectedInserts, actualInserts)
@@ -117,7 +103,7 @@ class EditsTest {
 
     val name = "alice"
     val splits = name.wordSplits()
-    val actualTransposes = Edits.transposes(splits)
+    val actualTransposes = transposes(splits)
 
     assertEquals(actualTransposes.count(), name.length - 1)
     assertEquals(expectedTransposes, actualTransposes)
@@ -144,7 +130,7 @@ class EditsTest {
         "asok", "asol", "asom", "ason", "asoo", "asop", "asoq", "asor",
         "asos", "asot", "asou", "asov", "asow", "asox", "asoy", "asoz"
     )
-    val actualReplaces = Edits.replaces(splits)
+    val actualReplaces = replaces(splits)
 
     assertEquals(actualReplaces.count(), Edits.LETTERS.count() * name.length)
     assertEquals(expectedReplaces, actualReplaces)

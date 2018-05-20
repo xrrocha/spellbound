@@ -2,6 +2,8 @@ package net.xrrocha.spellbound.scala
 
 import com.typesafe.scalalogging.StrictLogging
 
+import scala.util.matching.Regex
+
 case class SpellingCorrector(dictionary: Map[Word, Rank]) {
   require(dictionary != null && dictionary.nonEmpty)
 
@@ -102,9 +104,9 @@ object SpellingCorrector extends StrictLogging {
     for ((left, right) <- splits if !right.isEmpty; letter <- Letters)
       yield left + letter + right.substring(1)
 
-  val Alphabetic = "^[\\p{Alpha}]+$".r
+  val Alphabetic: Regex = "^[\\p{Alpha}]+$".r
 
-  def isAlphabetic(word: Word) = Alphabetic.findFirstIn(word).isDefined
+  def isAlphabetic(word: Word): Boolean = Alphabetic.findFirstIn(word).isDefined
 
   def normalize(word: Word): Word = {
     val normalizedWord = word.trim.toLowerCase

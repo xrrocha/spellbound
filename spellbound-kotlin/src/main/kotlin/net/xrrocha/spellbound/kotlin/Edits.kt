@@ -33,11 +33,6 @@ object Edits {
           }
   )
 
-  val deletes = ALL_EDITS[0]
-  val inserts = ALL_EDITS[1]
-  val transposes = ALL_EDITS[2]
-  val replaces = ALL_EDITS[3]
-
   fun String.wordSplits(): Iterable<WordSplit> =
       IntRange(0, this.length).map {
         WordSplit(this.substring(0, it), this.substring(it))

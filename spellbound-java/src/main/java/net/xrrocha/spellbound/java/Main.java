@@ -1,9 +1,5 @@
 package net.xrrocha.spellbound.java;
 
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +13,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * Exercise Norvig spelling corrector by passing a dictionary filename and zero

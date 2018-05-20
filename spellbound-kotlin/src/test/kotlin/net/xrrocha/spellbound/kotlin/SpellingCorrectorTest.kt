@@ -1,7 +1,5 @@
 package net.xrrocha.spellbound.kotlin
 
-import net.xrrocha.spellbound.kotlin.Edits.WordSplit
-import net.xrrocha.spellbound.kotlin.Edits.wordSplits
 import net.xrrocha.spellbound.kotlin.SpellingCorrector.Companion.isAlphabetic
 import net.xrrocha.spellbound.kotlin.SpellingCorrector.Companion.normalize
 import org.junit.Test
