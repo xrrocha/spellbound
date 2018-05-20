@@ -1,42 +1,32 @@
 package net.xrrocha.spellbound.java;
 
-import net.xrrocha.spellbound.java.SpellingCorrector.WordSplit;
+import net.xrrocha.spellbound.java.SpellingCorrector.*;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.toList;
 import static junit.framework.TestCase.fail;
-import static net.xrrocha.spellbound.java.SpellingCorrector.LETTERS;
-import static net.xrrocha.spellbound.java.SpellingCorrector.deletes;
-import static net.xrrocha.spellbound.java.SpellingCorrector.inserts;
-import static net.xrrocha.spellbound.java.SpellingCorrector.isAlphabetic;
-import static net.xrrocha.spellbound.java.SpellingCorrector.normalize;
-import static net.xrrocha.spellbound.java.SpellingCorrector.replaces;
-import static net.xrrocha.spellbound.java.SpellingCorrector.splits;
-import static net.xrrocha.spellbound.java.SpellingCorrector.transposes;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static net.xrrocha.spellbound.java.SpellingCorrector.*;
+import static org.junit.Assert.*;
 
 public class SpellingCorrectorTest {
 
-  private final SpellingCorrector spellingCorrector =
-      new SpellingCorrector(Map.of(
-          "centry", 12463,
-          "contra", 93053,
-          "country", 105902,
-          "ricksha", 0,
-          "sleeping", 101079,
-          "sliping", 0,
-          "sloping", 79015,
-          "spelling", 98993,
-          "spewing", 64515,
-          "spiling", 0
-      ));
+  private final Map<String, Integer> dictionary = Map.of(
+      "centry", 12463,
+      "contra", 93053,
+      "country", 105902,
+      "ricksha", 0,
+      "sleeping", 101079,
+      "sliping", 0,
+      "sloping", 79015,
+      "spelling", 98993,
+      "spewing", 64515,
+      "spiling", 0
+  );
+
+  private final SpellingCorrector spellingCorrector = new SpellingCorrector(dictionary);
 
   @Test
   public void yieldsEmptyOnDictionaryWord() {
@@ -44,15 +34,30 @@ public class SpellingCorrectorTest {
   }
 
   @Test
-  public void yieldsCorrectionsOnTypo() {
+  public void yieldsCorrectionsOnTypo1() {
+    var typo1 = "speling";
+
     var expectedCorrections = List.of(
         "spelling", "spewing", "spiling"
     );
 
-    var actualCorrections = spellingCorrector.getCorrections("speling");
+    var actualCorrections = spellingCorrector.getCorrections(typo1);
 
     assertTrue(actualCorrections.isPresent());
     assertEquals(expectedCorrections, actualCorrections.get());
+  }
+
+  @Test
+  public void yieldsCorrectionsOnTypo2() {
+    var typo2 = "spelinmg";
+    var expectedCorrections = List.of(
+        "spelling", "spewing", "spiling"
+    );
+
+    var actualCorrections = spellingCorrector.getCorrections(typo2);
+
+    assertTrue(actualCorrections.isPresent());
+    assertEquals(actualCorrections.get(), expectedCorrections);
   }
 
   @Test
@@ -92,7 +97,7 @@ public class SpellingCorrectorTest {
     var expectedDeletes = List.of(
         "ally", "wlly", "waly", "waly", "wall"
     );
-    var actualDeletes = deletes(splits).collect(Collectors.toList());
+    var actualDeletes = deletes(splits).collect(toList());
 
     assertEquals(actualDeletes.size(), name.length());
 
@@ -107,7 +112,7 @@ public class SpellingCorrectorTest {
     var expectedTransposes = List.of(
         "laice", "ailce", "alcie", "aliec"
     );
-    var actualTransposes = transposes(splits).collect(Collectors.toList());
+    var actualTransposes = transposes(splits).collect(toList());
 
     assertEquals(actualTransposes.size(), name.length() - 1);
     assertEquals(expectedTransposes, actualTransposes);
@@ -133,7 +138,7 @@ public class SpellingCorrectorTest {
         "asok", "asol", "asom", "ason", "asoo", "asop", "asoq", "asor",
         "asos", "asot", "asou", "asov", "asow", "asox", "asoy", "asoz"
     );
-    var actualReplaces = replaces(splits).collect(Collectors.toList());
+    var actualReplaces = replaces(splits).collect(toList());
 
     assertEquals(actualReplaces.size(), LETTERS.length * name.length());
     assertEquals(expectedReplaces, actualReplaces);
@@ -177,7 +182,7 @@ public class SpellingCorrectorTest {
         "dgberts", "dgbertt", "dgbertu", "dgbertv", "dgbertw", "dgbertx",
         "dgberty", "dgbertz"
     );
-    var actualInserts = inserts(splits).collect(Collectors.toList());
+    var actualInserts = inserts(splits).collect(toList());
 
     assertEquals(actualInserts.size(), LETTERS.length * (name.length() + 1));
     assertEquals(expectedInserts, actualInserts);

@@ -1,10 +1,5 @@
 package net.xrrocha.spellbound.java;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toList;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +8,11 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Java implementation of PeterNorvig's
@@ -86,33 +86,14 @@ public class SpellingCorrector {
       return Optional.empty();
     }
 
-    // Suggestions for one-edit typos: most typos contain just one error
-    var corrections1 = edits1(normalizedWord);
+    // Corrections for one-edit typos; most typos contain just one error.
+    // Packing removes duplicates, ensures presence in dictionary and orders by rank
+    var corrections = pack(edits1(normalizedWord));
 
-    // The correction suggestions to be returned
-    List<String> corrections;
-
-    // If edit1 yields non-empty results return them
-    if (!corrections1.isEmpty()) {
-
-      // edit1 did produce results, yay!
-      corrections = corrections1;
-
-    } else {
-
-      // If edit1 yields no dictionary word, let's try with 2 edits.
-      // Some typos stem from 2 errors; few come from more than 2
-      var corrections2 = edits2(normalizedWord);
-
-      if (!corrections2.isEmpty()) {
-
-        // edit2 did produce results, yay!
-        corrections = corrections2;
-      } else {
-
-        // No results even for 2 edits: return empty list
-        corrections = emptyList();
-      }
+    // If edit1 yields no dictionary word, try with 2 edits.
+    // Some typos stem from 2 errors; few come from more than 2
+    if (corrections.isEmpty()) {
+      corrections = pack(edits2(normalizedWord));
     }
 
     // Return (possibly empty) list of suggested corrections
@@ -126,16 +107,13 @@ public class SpellingCorrector {
    * @param typo The typo to use in regenerating dictionary words
    * @return The list of dictionary words reconstituted from typo
    */
-  private List<String> edits1(String typo) {
+  static Stream<String> edits1(String typo) {
 
-    // Generate all splits for the word so as to account for typos originating
-    // in the insertion of a space in the middle of the word
+    // Generate all splits for the word
     var wordSplits = splits(typo);
 
-    // Generate and apply all 4 edits (in parallel) to each split. Packing removes
-    // duplicates, ensures result presence in dictionary and orders by rank
-    return pack(edits.parallelStream()
-        .flatMap(edit -> edit.apply(wordSplits)));
+    // Generate and apply all 4 edits (in parallel) to each split
+    return edits.parallelStream().flatMap(edit -> edit.apply(wordSplits));
   }
 
   /**
@@ -145,12 +123,10 @@ public class SpellingCorrector {
    * @param typo The typo to use in regenerating dictionary words
    * @return The (possibly empty) list of dictionary words re-created from typo
    */
-  private List<String> edits2(String typo) {
-    // Repeatedly apply all 4 edits twice, and in parallel, to each split.
-    // Packing removes duplicates, ensures result presence in dictionary and
-    // orders by rank
-    return pack(edits1(typo).parallelStream()
-        .flatMap(w -> edits1(w).stream()));
+  static Stream<String> edits2(String typo) {
+
+    // Repeatedly apply all 4 edits twice, and in parallel, to each split
+    return edits1(typo).flatMap(SpellingCorrector::edits1);
   }
 
   /**
@@ -166,7 +142,7 @@ public class SpellingCorrector {
    *                    from typo
    * @return The <code>List&lt;String&gt;</code> resulting from stream processing
    */
-  private List<String> pack(Stream<String> editResults) {
+  List<String> pack(Stream<String> editResults) {
     return editResults
         // Remove duplicates
         .distinct()
@@ -278,8 +254,25 @@ public class SpellingCorrector {
     return normalizedWord;
   }
 
+  /**
+   * Verify whether a string is alphabetic.
+   *
+   * @param word The string to be tested
+   * @return whether the string is alphabetic
+   */
   static boolean isAlphabetic(String word) {
     return ALPHABETIC.matcher(word).matches();
+  }
+
+  /**
+   * Make a sequential <code>Stream&lt;T&gt;</code> from an <code>Iterable&lt;T&gt;</code>.
+   *
+   * @param iterable The iterable to be rephrased as a stream
+   * @param <T>      The generic type of the given iterable and the resulting stream
+   * @return The resulting stream
+   */
+  static <T> Stream<T> stream(Iterable<T> iterable) {
+    return StreamSupport.stream(iterable.spliterator(), false);
   }
 
   /**
