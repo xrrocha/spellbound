@@ -109,8 +109,8 @@ public class SpellingCorrector {
    */
   static Stream<String> edits1(String typo) {
 
-    // Generate all splits for typo
-    var wordSplits = splits(typo);
+    // Generate all wordSplits for typo
+    var wordSplits = wordSplits(typo);
 
     // Generate and apply all 4 edits (in parallel) to each split
     return edits.parallelStream().flatMap(edit -> edit.apply(wordSplits));
@@ -154,18 +154,18 @@ public class SpellingCorrector {
   }
 
   /**
-   * Generate all possible splits from a word. The first split has the
+   * Generate all possible wordSplits from a word. The first split has the
    * empty string on the left and the complete word on the right. The
    * last split contains the complete word on the left and the empty
-   * string on the right. Intermediate splits contain everything in-between;
+   * string on the right. Intermediate wordSplits contain everything in-between;
    * e.g. the first 4 letters on the left and the substring starting at the
    * 5th element on the right). This operation yields
    * <code>word.length() + 1</code> split pairs.
    *
-   * @param word The word to build splits from
-   * @return The list of left/right word splits
+   * @param word The word to build wordSplits from
+   * @return The list of left/right word wordSplits
    */
-  static List<WordSplit> splits(String word) {
+  static List<WordSplit> wordSplits(String word) {
     return IntStream
         .rangeClosed(0, word.length()).boxed()
         .map(i -> {
@@ -178,9 +178,9 @@ public class SpellingCorrector {
 
   /**
    * Generates all possible deletes from left/right pairs in one or
-   * more splits. This split yields <code>word.length()</code> words.
+   * more wordSplits. This split yields <code>word.length()</code> words.
    *
-   * @param splits A list of left/right splits
+   * @param splits A list of left/right wordSplits
    * @return The list of words resulting from 1-character deletions
    * applied to every split
    */
@@ -192,10 +192,10 @@ public class SpellingCorrector {
 
   /**
    * Generates all possible transposes from left/right pairs in one or
-   * more splits. This edit generates <code>name.length() - 1</code>
+   * more wordSplits. This edit generates <code>name.length() - 1</code>
    * words.
    *
-   * @param splits A list of left/right splits
+   * @param splits A list of left/right wordSplits
    * @return The list of 1-character inversions applied to every split
    */
   static Stream<String> transposes(List<WordSplit> splits) {
@@ -210,10 +210,10 @@ public class SpellingCorrector {
 
   /**
    * Generates all possible replaces from left/right pairs in one or more
-   * splits by replacing each character with each letter in the alphabet.
+   * wordSplits by replacing each character with each letter in the alphabet.
    * This edit yields <code>LETTERS.length * name.length()</code> words.
    *
-   * @param splits A list of left/right splits
+   * @param splits A list of left/right wordSplits
    * @return The list of 1-character substitutions applied to every split
    */
   static Stream<String> replaces(List<WordSplit> splits) {
@@ -226,11 +226,11 @@ public class SpellingCorrector {
 
   /**
    * Generates all possible inserts from left/right pairs in one or more
-   * splits by inserting every letter between every character in the word
-   * splits. This prolific edit generates
+   * wordSplits by inserting every letter between every character in the word
+   * wordSplits. This prolific edit generates
    * <code>LETTERS.length * (word.length() + 1)</code> words.
    *
-   * @param splits A list of left/right splits
+   * @param splits A list of left/right wordSplits
    * @return The list of 1-letter substitutions applied to every split
    */
   static Stream<String> inserts(List<WordSplit> splits) {

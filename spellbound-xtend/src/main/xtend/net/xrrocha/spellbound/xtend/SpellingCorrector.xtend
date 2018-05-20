@@ -105,7 +105,7 @@ class SpellingCorrector {
   static def Stream<String> edits1(String typo1) {
 
     // Generate all splits for typo1
-    val wordSplits = splits(typo1)
+    val wordSplits = net.xrrocha.spellbound.xtend.SpellingCorrector.wordSplits(typo1)
 
     // Generate and apply all 4 edits (in parallel) to each split. Packing removes
     // duplicates, ensures result presence in dictionary and orders by rank
@@ -161,7 +161,7 @@ class SpellingCorrector {
    * @param word The word to build splits from
    * @return The list of left/right word splits
    */
-  static def List<WordSplit> splits(String word) {
+  static def List<WordSplit> wordSplits(String word) {
     (0 .. word.length).map [
       val left = word.substring(0, it)
       val right = word.substring(it)
