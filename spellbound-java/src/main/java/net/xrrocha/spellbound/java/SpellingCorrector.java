@@ -81,16 +81,17 @@ public class SpellingCorrector {
     // Ensure word format matches that of the dictionary: lowercase alphabetics
     var normalizedWord = normalize(word);
 
-    // If word occurs in dictionary return no suggestions
+    // If word occurs in dictionary then return no suggestions
     if (dictionary.containsKey(normalizedWord)) {
       return Optional.empty();
     }
 
     // Corrections for one-edit typos; most typos contain just one error.
-    // Packing removes duplicates, ensures presence in dictionary and orders by rank
+    // Method known removes duplicates, ensures presence in dictionary
+    // and orders by rank
     var corrections = known(edits1(normalizedWord));
 
-    // If edit1 yields no in-dictionary word, try with 2 edits.
+    // If edit1 yields no in-dictionary word, try with edits2.
     // Some typos stem from 2 errors; few come from more than 2
     if (corrections.isEmpty()) {
       corrections = known(edits2(normalizedWord));
@@ -125,7 +126,7 @@ public class SpellingCorrector {
    */
   static Stream<String> edits2(String typo) {
 
-    // Repeatedly apply all 4 edits twice, and in parallel, to each split
+    // Apply all 4 edits twice, and in parallel, to each split
     return edits1(typo).flatMap(SpellingCorrector::edits1);
   }
 
