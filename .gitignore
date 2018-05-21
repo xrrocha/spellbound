@@ -11,5 +11,5 @@
 .project
 .settings
 __pycache__
-scratch
+scratch/
 target
