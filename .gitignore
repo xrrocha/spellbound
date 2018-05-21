@@ -11,8 +11,5 @@
 .project
 .settings
 __pycache__
-dependency-reduced-pom.xml
-project/project
-stage
+scratch
 target
-toolchains.xml
