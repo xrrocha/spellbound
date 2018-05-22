@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="net.xrrocha.spellbound.kotlin" level="info" additivity="false">
+    <logger name="net.xrrocha.spellbound.scala" level="info" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </logger>
