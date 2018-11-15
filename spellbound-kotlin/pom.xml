@@ -19,17 +19,9 @@
     <url>https://xrrocha.net/post/spelling-jvm-3-kotlin-implementation/</url>
 
     <properties>
-        <kotlin.version>1.2.41</kotlin.version>
-        <kotlinx.version>0.22.5</kotlinx.version>
-        <junit.version>4.12</junit.version>
+        <kotlin.version>1.3.10</kotlin.version>
+        <kotlinx.version>1.0.1</kotlinx.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>http://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>

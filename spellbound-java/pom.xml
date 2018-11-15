@@ -19,11 +19,8 @@
     <url>https://xrrocha.net/post/spelling-jvm-2-java-implementation/</url>
 
     <properties>
-        <guava.version>24.0-jre</guava.version>
-        <junit.version>4.12</junit.version>
-        <javadoc-plugin.version>3.0.0</javadoc-plugin.version>
-        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-        <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
+        <guava.version>27.0-jre</guava.version>
+        <javadoc-maven.version>3.0.1</javadoc-maven.version>
     </properties>
 
     <dependencies>
@@ -47,8 +44,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
+                    <parameters>true</parameters>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>

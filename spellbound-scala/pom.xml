@@ -22,9 +22,9 @@
 		<scala-major.version>2.12</scala-major.version>
 		<scala-minor.version>6</scala-minor.version>
 		<scala.version>${scala-major.version}.${scala-minor.version}</scala.version>
-		<scala-plugin.version>3.3.2</scala-plugin.version>
-		<scalatest.version>3.0.4</scalatest.version>
-		<scala-logging.version>3.7.2</scala-logging.version>
+		<scala-plugin.version>3.4.4</scala-plugin.version>
+		<scalatest.version>3.2.0-SNAP10</scalatest.version>
+		<scala-logging.version>3.9.0</scala-logging.version>
 	</properties>
 
 	<dependencies>

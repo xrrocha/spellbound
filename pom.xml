@@ -1,33 +1,67 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <!--
+        This project uses Java version 11. Make sure Java 11 properly installed
+        in your environment.
+    -->
 
-	<groupId>net.xrrocha</groupId>
-	<artifactId>spellbound-jvm</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
-	<dependencies>
-		<dependency>
-			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>2.10.0</version>
-		</dependency>
-	</dependencies>
-	<packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-	<name>Norvig Spelling Suggestion for the JVM</name>
-	<url>https://xrrocha.net/post/spelling-jvm-1-introduction/</url>
+    <groupId>net.xrrocha</groupId>
+    <artifactId>spellbound-jvm</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<properties>
-		<java.version>10</java.version>
-	</properties>
-	
-	<modules>
-		<module>spellbound-java</module>
-		<module>spellbound-kotlin</module>
-		<module>spellbound-scala</module>
-		<module>spellbound-xtend</module>
-	</modules>
+    <name>Norvig Spelling Suggestion for the JVM</name>
+    <url>https://xrrocha.net/post/spelling-jvm-1-introduction/</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java.version>11</java.version>
+
+        <junit.version>4.12</junit.version>
+
+        <maven.version>3.5</maven.version>
+        <maven-enforcer.version>3.0.0-M2</maven-enforcer.version>
+        <maven-shade-plugin.version>3.2.0</maven-shade-plugin.version>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+    </properties>
+
+    <modules>
+        <module>spellbound-java</module>
+        <module>spellbound-kotlin</module>
+        <module>spellbound-scala</module>
+        <module>spellbound-xtend</module>
+        <!-- <module>spellbound-ceylon</module> -->
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-enforcer.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${maven.version}</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -67,11 +67,13 @@ object Main {
     * @param inputLines        The stream of lines to be parsed and validated
     * @param spellingCorrector The spelling corrector used to yield suggestions
     */
-  def processInputLines(inputLines: Iterable[String],
-                        spellingCorrector: SpellingCorrector): Iterable[String] = {
+  def processInputLines(
+    inputLines: Iterable[String],
+    spellingCorrector: SpellingCorrector
+  ): Iterable[String] = {
 
     inputLines
-      // Split lines into space-delimited words
+    // Split lines into space-delimited words
       .flatMap(_.split("\\s+"))
       .toSeq
       // Remove duplicates
@@ -83,7 +85,9 @@ object Main {
       // Suppress non-typo, in-dictionary words having no suggestions
       .filter { case (_, corrections) => corrections.isDefined }
       // Build word/suggestion tab-separated line
-      .map { case (word, corrections) => word + "\t" + corrections.get.mkString(",") }
+      .map {
+        case (word, corrections) => word + "\t" + corrections.get.mkString(",")
+      }
   }
 
   /**
@@ -113,10 +117,10 @@ object Main {
   def createInputLineStream(filenames: Iterable[String]): Iterable[String] = {
     if (filenames.isEmpty) {
       Source.fromInputStream(System.in).getLines().toSeq
-    }
-    else filenames.flatMap {
-      Source.fromFile(_).getLines().toSeq
-    }
+    } else
+      filenames.flatMap {
+        Source.fromFile(_).getLines().toSeq
+      }
   }
 
   /**
@@ -126,8 +130,7 @@ object Main {
     * @return The resulting of word-to-rank mappings
     */
   def loadDictionary(lines: Iterable[String]): Map[Word, Rank] =
-    lines
-      .par
+    lines.par
       .map { line =>
         val Array(word, rank) = line.split("\\t", 2)
         normalize(word) -> rank.toInt

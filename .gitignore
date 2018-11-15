@@ -9,7 +9,7 @@
 .classpath
 .idea
 .project
-.settings
+.settings/
 __pycache__
-scratch/
-target
+attic/
+target/

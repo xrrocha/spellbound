@@ -48,7 +48,7 @@ class Main {
   static def main(String... args) {
 
     if (args.length < 1) {
-      onError('''Usage: «Main.name» <dictionaryFilename> [ file1 file2 ... ]''')
+      onError('''Usage: «Main.name»<dictionaryFilename> [ file1 file2 ... ]''')
       throw new IllegalStateException('Return from System.exit(), df?')
     }
 

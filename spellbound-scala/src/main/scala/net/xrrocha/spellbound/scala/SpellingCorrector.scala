@@ -25,11 +25,9 @@ case class SpellingCorrector(dictionary: Map[Word, Rank]) {
         // Inner function to remove duplicates, weed out words not
         // present in dictionary and sort descending by rank
         def known(normalizedWords: Seq[Word]) =
-          normalizedWords
-            .distinct
+          normalizedWords.distinct
             .filter(dictionary.contains)
             .sortBy(-dictionary(_)) // reverse by rank
-
 
         val editResults1 = known(edits1(normalizedWord))
 
@@ -67,8 +65,7 @@ object SpellingCorrector extends StrictLogging {
       replaces // boss -> bosz, bosd, ...
     )
 
-    edits
-      .par // compute separate edits concurrently
+    edits.par // compute separate edits concurrently
       .flatMap(edit => edit(splits))
       .seq
   }
@@ -79,8 +76,7 @@ object SpellingCorrector extends StrictLogging {
       e1 <- edits1(word).par
       e2 <- edits1(e1).par
     } yield e2
-  }
-    .seq
+  }.seq
 
   // Edit operations
   val Letters: String = ('a' to 'z').mkString // ASCII-only

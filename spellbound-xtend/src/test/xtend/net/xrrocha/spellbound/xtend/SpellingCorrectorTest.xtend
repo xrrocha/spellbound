@@ -50,15 +50,15 @@ class SpellingCorrectorTest {
 
   @Test
   def void yieldsCorrectionsOnTwoTypos() {
-    val typo2 = "spelinmg";
-    val expectedCorrections = List.of(
+    val typo2 = "spelinmg"
+    val expectedCorrections = #[
         "spelling", "spewing", "spiling"
-    );
+    ]
 
-    val actualCorrections = spellingCorrector.getCorrections(typo2);
+    val actualCorrections = spellingCorrector.getCorrections(typo2)
 
-    assertTrue(actualCorrections.isPresent());
-    assertEquals(actualCorrections.get(), expectedCorrections);
+    assertTrue(actualCorrections.isPresent())
+    assertEquals(actualCorrections.get(), expectedCorrections)
   }
 
   @Test

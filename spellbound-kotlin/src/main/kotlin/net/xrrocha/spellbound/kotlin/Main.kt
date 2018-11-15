@@ -28,30 +28,30 @@ import java.io.File
  */
 fun main(args: Array<String>) {
 
-  if (args.isEmpty()) {
-    onError("Usage: Main <dictionaryFilename> [ file1 file2 ... ]")
-    throw IllegalStateException("Return from System.exit(), df?")
-  }
+    if (args.isEmpty()) {
+        onError("Usage: Main <dictionaryFilename> [ file1 file2 ... ]")
+        throw IllegalStateException("Return from System.exit(), df?")
+    }
 
-  // The first argument points to the file containing a tab-delimited
-  // (word/rank) dictionary
-  val dictionaryFile = File(args[0])
-  require(dictionaryFile.isFile && dictionaryFile.canRead())
+    // The first argument points to the file containing a tab-delimited
+    // (word/rank) dictionary
+    val dictionaryFile = File(args[0])
+    require(dictionaryFile.isFile && dictionaryFile.canRead())
 
-  // Create a (possibly empty) list of filenames to process
-  val filenames = args.sliceArray(1..args.size).toList()
+    // Create a (possibly empty) list of filenames to process
+    val filenames = args.sliceArray(1..args.size).toList()
 
-  // Create an iterable of lines from the input files (or the
-  // operating system's standard input)
-  val inputLines = loadInputLines(filenames)
+    // Create an iterable of lines from the input files (or the
+    // operating system's standard input)
+    val inputLines = loadInputLines(filenames)
 
-  // Load the dictionary from the given file
-  val dictionary = loadDictionary(dictionaryFile.readLines())
-  // Create a spelling corrector instance from the dictionary
-  val spellingCorrector = SpellingCorrector(dictionary)
+    // Load the dictionary from the given file
+    val dictionary = loadDictionary(dictionaryFile.readLines())
+    // Create a spelling corrector instance from the dictionary
+    val spellingCorrector = SpellingCorrector(dictionary)
 
-  // Extract words and their corrections onto standard output
-  processInputLines(inputLines, spellingCorrector).forEach { println(it) }
+    // Extract words and their corrections onto standard output
+    processInputLines(inputLines, spellingCorrector).forEach { println(it) }
 }
 
 /**
@@ -66,21 +66,21 @@ fun main(args: Array<String>) {
 internal fun processInputLines(inputLines: Iterable<String>,
                                spellingCorrector: SpellingCorrector): Iterable<String> {
 
-  return inputLines
-      // Split lines into space-delimited words
-      .flatMap { it.split("\\s+".toRegex()) }
-      // Remove duplicates
-      .distinct()
-      // Weed out non-alphabetic words
-      .filter { it.isAlphabetic() }
-      // Generate suggestions for each word
-      .map { word ->
-        word to spellingCorrector.getCorrections(word)
-      }
-      // Suppress non-typo, in-dictionary words having no suggestions
-      .filter { (_, corrections) -> corrections != null }
-      // Build word/suggestion tab-separated line
-      .map { (word, corrections) -> word + "\t" + corrections!!.joinToString(",") }
+    return inputLines
+            // Split lines into space-delimited words
+            .flatMap { it.split("\\s+".toRegex()) }
+            // Remove duplicates
+            .distinct()
+            // Weed out non-alphabetic words
+            .filter { it.isAlphabetic() }
+            // Generate suggestions for each word
+            .map { word ->
+                word to spellingCorrector.getCorrections(word)
+            }
+            // Suppress non-typo, in-dictionary words having no suggestions
+            .filter { (_, corrections) -> corrections != null }
+            // Build word/suggestion tab-separated line
+            .map { (word, corrections) -> word + "\t" + corrections!!.joinToString(",") }
 }
 
 /**
@@ -92,8 +92,8 @@ internal fun processInputLines(inputLines: Iterable<String>,
  * @return The concatenated stream of lines
  */
 internal fun loadInputLines(filenames: Iterable<String>): Iterable<String> {
-  return if (filenames.none()) System.`in`.bufferedReader().readLines()
-  else filenames.flatMap { File(it).readLines() }
+    return if (filenames.none()) System.`in`.bufferedReader().readLines()
+    else filenames.flatMap { File(it).readLines() }
 }
 
 /**
@@ -103,20 +103,20 @@ internal fun loadInputLines(filenames: Iterable<String>): Iterable<String> {
  * @return The resulting of word-to-rank mappings
  */
 internal fun loadDictionary(lines: Iterable<String>): Map<String, Int> {
-  return lines
-      .map { line ->
-        // Split tab-delimited line into fields
-        val fields = line.split("\\t".toRegex(), 2)
-        // First field contains word
-        val word = fields[0]
-        // Second field contains rank
-        val rank = fields[1].toInt()
-        // Return word/rank pair as a <code>Map.Entry<String, Integer></code>
-        word to rank
-      }
-      // Skip invalid words or ranks
-      .filter { (word, rank) -> word.isAlphabetic() && rank > 0 }
-      .toMap()
+    return lines
+            .map { line ->
+                // Split tab-delimited line into fields
+                val fields = line.split("\\t".toRegex(), 2)
+                // First field contains word
+                val word = fields[0]
+                // Second field contains rank
+                val rank = fields[1].toInt()
+                // Return word/rank pair as a <code>Map.Entry<String, Integer></code>
+                word to rank
+            }
+            // Skip invalid words or ranks
+            .filter { (word, rank) -> word.isAlphabetic() && rank > 0 }
+            .toMap()
 }
 
 /**
@@ -126,6 +126,6 @@ internal fun loadDictionary(lines: Iterable<String>): Map<String, Int> {
  * @param message The error message to be printed
  */
 internal fun onError(message: String) {
-  System.err.println(message)
-  System.exit(1)
+    System.err.println(message)
+    System.exit(1)
 }
