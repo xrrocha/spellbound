@@ -18,7 +18,7 @@ Features discussed include  functional programming, type inference,
 extension methods, compile-time code generation and other niceties well beyond 
 vanilla Java usage.
 
-Examples and new concepts are first introduced first in Java 9 so they're 
+Examples and new concepts are first introduced first in Java 10 so they're 
 immediately understandable to the experienced Java programmer. The Java 
 implementation is then replicated, _idiomatically_, in today's most relevant 
 alternative JVM languages:
