@@ -52,9 +52,9 @@ class SpellingCorrector {
    * @param dictionary The word-to-rank dictionary to draw valid words from.
    */
   new(Map<String, Integer> dictionary) {
-    checkNotNull(dictionary);
-    checkArgument(!dictionary.isEmpty);
-    this.dictionary = dictionary
+    checkNotNull(dictionary)
+    checkArgument(!dictionary.isEmpty)
+    this.dictionary = dictionary; 
   }
 
   /**
@@ -82,16 +82,16 @@ class SpellingCorrector {
     } else { // Word is not present in dictionary
       // Corrections for one-edit typos; most typos contain just one error.
       // Packing removes duplicates, ensures presence in dictionary and orders by rank
-      var corrections = edits1(normalizedWord).known;
+      var corrections = edits1(normalizedWord).known
 
       // If edit1 yields no in-dictionary word, try with 2 edits.
       // Some typos stem from 2 errors; few come from more than 2
       if (corrections.isEmpty()) {
-        corrections = edits2(normalizedWord).known;
+        corrections = edits2(normalizedWord).known
       }
 
       // Return (possibly empty) list of suggested corrections
-      return Optional.of(corrections);
+      return Optional.of(corrections)
     }
   }
 
