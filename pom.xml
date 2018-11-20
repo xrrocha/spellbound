@@ -5,7 +5,8 @@
 
     <!--
         This project uses Java version 11. Make sure Java 11 properly installed
-        in your environment.
+        in your environment and that environment variable JAVA_HOME points to
+        your JJava 11 installation.
     -->
 
     <modelVersion>4.0.0</modelVersion>
