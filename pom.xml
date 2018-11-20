@@ -37,7 +37,6 @@
         <module>spellbound-kotlin</module>
         <module>spellbound-scala</module>
         <module>spellbound-xtend</module>
-        <!-- <module>spellbound-ceylon</module> -->
     </modules>
 
     <build>
